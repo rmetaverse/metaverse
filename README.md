@@ -1,2 +1,2 @@
 # metaverse
-Package to provide consistent workflow evidence synthesis in R
+Package to provide a consistent workflow for evidence synthesis projects in R
