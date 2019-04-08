@@ -1,0 +1,10 @@
+README for ESuRFr
+
+1) Download all files in ESuRFr folder
+2) "refExt2" folder is a modified version of ParsCit downloaded from http://aye.comp.nus.edu.sg/parsCit/
+3) Main program is esurfr.py
+4) Put the papers that need to be extracted in the "input" folder with format "uniqueID_xxxxx.filetype" - there is a sample paper in the folder for testing
+5) "output" folder must contain a file that keeps track of the papers that have been extracted (default:doneMAS.txt)
+6) Simple test: #python esurfr.py
+7) Results will be in ./output/xxx.csv (default: referencesdataMAS.csv)
+8) Automatically downloaded fulltext/abstract will be in  ./output/uniqueID/
