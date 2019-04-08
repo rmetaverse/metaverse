@@ -21,7 +21,8 @@ Imports:
     rcrossref,
     metacor,
     metafor,
-    magrittr
+    magrittr,
+    dplyr
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true
