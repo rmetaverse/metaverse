@@ -16,7 +16,12 @@ Authors@R: c(
     comment = c(ORCID = "0000-0002-9978-011X")))
 Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
 Depends: R (>= 3.5.0)
-Imports: revtools, rcrossref, metacor, metafor
+Imports: 
+    revtools,
+    rcrossref,
+    metacor,
+    metafor,
+    magrittr
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true
