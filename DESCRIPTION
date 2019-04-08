@@ -34,9 +34,9 @@ License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true
 RoxygenNote: 6.1.1.9000
-Remotes: elizagrames/litsearchr
-         malcolmbarrett/tidymeta
-         malcolmbarrett/mbmisc
-         mjwestgate/revtools
-         r-lib/rlang
+Remotes: elizagrames/litsearchr,
+         malcolmbarrett/tidymeta,
+         malcolmbarrett/mbmisc,
+         mjwestgate/revtools,
+         r-lib/rlang,
          wviechtb/metadat
