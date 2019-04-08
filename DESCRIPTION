@@ -22,10 +22,15 @@ Imports:
     metacor,
     metafor,
     magrittr,
-    dplyr
+    dplyr,
+    yaml,
+    ggrepel
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true
 RoxygenNote: 6.1.1.9000
 Remotes: softloud/metabrom
          malcolmbarrett/tidymeta
+         malcolmbarrett/mbmisc
+         r-lib/rlang
+         

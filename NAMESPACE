@@ -2,4 +2,6 @@
 
 export("%>%")
 import(dplyr)
+import(ggrepel)
+import(yaml)
 importFrom(magrittr,"%>%")
