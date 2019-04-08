@@ -13,7 +13,13 @@ Authors@R: c(
     family = "Gray",
     role = c("aut"),
     email = "charlestigray@gmail.com",
-    comment = c(ORCID = "0000-0002-9978-011X")))
+    comment = c(ORCID = "0000-0002-9978-011X")),
+  person(
+    given = "W. Kyle",
+    family = "Hamilton",
+    role = c("aut"),
+    email = "whamilton@ucmerced.edu",
+    comment = c(ORCID = "0000-0002-8642-7990")))
 Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
 Depends: R (>= 3.5.0)
 Imports: 
