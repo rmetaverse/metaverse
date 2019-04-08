@@ -1,10 +1,22 @@
 Package: metaverse
 Version: 0.0.1
 Title: Workflows for evidence synthesis projects
-Author: Martin J. Westgate <martinjwestgate@gmail.com>
-Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing ecample workflows for systematic reviews and meta-analyses.
+Authors@R: c(
+  person(
+    given = "Martin",
+    family = "Westgate",
+    role = c("aut", "cre"),
+    email = "martinjwestgate@gmail.com",
+    comment = c(ORCID = "0000-0003-0854-2034")),
+  person(
+    given = Charles",
+    family = "Gray",
+    role = c("aut"),
+    email = "charlestigray@gmail.com",
+    comment = c(ORCID = "0000-0002-9978-011X")))
+Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
 Depends: R (>= 3.5.0)
-Imports:
+Imports: revtools, rcrossref, metacor, metafor
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true
