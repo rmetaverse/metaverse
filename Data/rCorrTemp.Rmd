@@ -3,8 +3,10 @@ title: "Standard Meta Analysis Template for Correlations"
 description: This is a standard meta-analysis template. It is designed to document
   a meta-analysis conducted in with the metaverse.
 output:
-  pdf_document: default
+  html_document:
+    df_print: paged
   html_notebook: default
+  pdf_document: default
 Author: me
 ---
 
@@ -42,6 +44,8 @@ specified.measure<-"ZCOR"
 library(metafor)
 #load knitr
 library(knitr)
+#load weightr
+library(weightr)
 ```
 
 ##About the analysis##
@@ -72,11 +76,20 @@ dat <- escalc(ri=ri, ni=ni, measure=specified.measure, data=mydata, append=TRUE)
 ```{r}
 # Run the random effect meta-analysis
 res <- rma(yi, vi, data=dat)
+weightr_effect <- res$yi
+weightr_var <- res$vi
+
+weightr_res <- weightfunct(weightr_effect, weightr_var)
 
 # Back transform z to r correlations for reporting if ZCOR was used
 transformed<-ifelse(specified.measure=="ZCOR", 
                     res_back<-predict(res, tranf=transf.ztor), 
                     res_back<-predict(res))
+
+# need to come back to this later
+weightr_transformed<-ifelse(specified.measure=="ZCOR",
+                    weightr_res_back<-predict(res, tranf=transf.ztor),
+                    weightr_res_back<-predict(res))
 
 # Create a table of information from the res model
 res.table<-cbind.data.frame(res_back$pred, res_back$se, 
@@ -89,6 +102,18 @@ het.table<-cbind.data.frame(res$tau2, res$se.tau2, res$QE,
                             res$QEp, res$I2, res_back$cr.lb, res_back$cr.ub)
 colnames(het.table)<-c("tau2", "se.tau2", "Q", "p", "I2", "cr.lb", "cr.ub")
 row.names(het.table)<-paste(X,"-",Y)
+
+# Create a table of information from the res model
+weightr_res.table<-cbind.data.frame(weightr_res_back$pred, weightr_res_back$se, 
+                            res$pval, weightr_res_back$ci.lb, weightr_res_back$ci.ub,  res$k)
+colnames(weightr_res.table)<-c("r", "se", "p", "CI.LB", "CI.UB", "k")
+row.names(weightr_res.table)<-paste(X,"-",Y)
+
+# Create a table of heterogeneity information
+weightr_het.table<-cbind.data.frame(res$tau2, res$se.tau2, res$QE, 
+                            res$QEp, res$I2, weightr_res_back$cr.lb, weightr_res_back$cr.ub)
+colnames(weightr_het.table)<-c("tau2", "se.tau2", "Q", "p", "I2", "cr.lb", "cr.ub")
+row.names(weightr_het.table)<-paste(X,"-",Y)
 ```
 
 ##Results##
@@ -111,6 +136,12 @@ forest(res, transf=transf.ztor,slab= paste(dat$authors, sep = ", "),
 A random effects meta-analysis was conducted (k=`r res$k`) to explore the association between `r X` and `r Y`. The average correlation between these variables is r~+~=`r round(res_back$pred,3)`, (p=`r round(res$pval,3)`, 95% CI [`r round(res_back$ci.lb, 2)`, `r round(res_back$ci.ub, 2)`]). See table below.
 
 `r kable(res.table, digits=3, row.names=NA, col.names=c("r","se", "p", "CI Lower", "CI Upper", "k"), caption="Meta-Analysis Summary Table")`
+
+**What is the strength of the association between `r X` and `r Y` when adjusted for publication bias?**
+
+An adjusted random effects meta-analysis taking publication bias into account was ran (k=`r res$k`) to evaluate whether the included studies with p-values greater than .05 occurred less frequently than one would expect based on sampling error. The average ajusted correlation between these variables is r~+~=`r round(weightr_res_back$pred,3)`, (p=`r round(weightr_res$p_adj[2],3)`, 95% CI [`r round(weightr_res$ci.lb_adj[3], 2)`, `r round(weightr_res$ci.ub_adj[3], 2)`]). See table below.
+
+`r kable(weightr_res.table, digits=3, row.names=NA, col.names=c("r","se", "p", "CI Lower", "CI Upper", "k"), caption="Publication Bias Adjusted Meta-Analysis Summary Table")`
 
 **Does the strength of the association vary across studies?**
 
