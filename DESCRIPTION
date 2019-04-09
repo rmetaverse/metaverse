@@ -25,20 +25,20 @@ Depends: R (>= 3.5.0)
 Imports:
     bibliometrix,
     dplyr,
+    stringr,
     ggrepel,
     metacor,
     metafor,
     magrittr,
     rcrossref,
     weightr,
+    rlang,
     yaml
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true
 RoxygenNote: 6.1.1.9000
 Remotes: elizagrames/litsearchr,
-         malcolmbarrett/tidymeta,
          malcolmbarrett/mbmisc,
          mjwestgate/revtools,
-         r-lib/rlang,
          wviechtb/metadat
