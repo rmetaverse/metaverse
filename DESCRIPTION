@@ -9,6 +9,12 @@ Authors@R: c(
     email = "martinjwestgate@gmail.com",
     comment = c(ORCID = "0000-0003-0854-2034")),
   person(
+    given = "Eliza",
+    family = "Grames",
+    role = c("aut"),
+    email = "eliza.grames@uconn.edu",
+    comment = c(ORCID = "0000-0003-1743-6815")),
+  person(
     given = "Charles",
     family = "Gray",
     role = c("aut"),
@@ -19,7 +25,37 @@ Authors@R: c(
     family = "Hamilton",
     role = c("aut"),
     email = "whamilton@ucmerced.edu",
-    comment = c(ORCID = "0000-0002-8642-7990")))
+    comment = c(ORCID = "0000-0002-8642-7990")),
+  person(
+    given = "Emily",
+    family = "Kothe",
+    role = c("aut"),
+    email = "emily.kothe@deakin.edu.au",
+    comment = c(ORCID = "0000-0003-1210-0554")),
+  person(
+    given = "Luke",
+    family = "McGuinness",
+    role = c("aut"),
+    email = "luke.mcguinness@bristol.ac.uk",
+    comment = c(ORCID = "0000-0001-8730-9761")),
+  person(
+    given = "Rose",
+    family = "O'Dea",
+    role = c("aut"),
+    email = "rose.eleanor.o.dea@gmail.com",
+    comment = c(ORCID = "0000-0001-8177-5075")),
+  person(
+    given = "Alfredo",
+    family = "Sanchez-Tojar",
+    role = c("aut"),
+    email = "alfredo.tojar@gmail.com",
+    comment = c(ORCID = "0000-0002-2886-0649")),
+  person(
+    given = "Michael",
+    family = "Schermann",
+    role = c("aut"),
+    email = "mschermann@scu.edu",
+    comment = c(ORCID = "0000-0003-1210-0554")))
 Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
 Depends: R (>= 3.5.0)
 Imports:
