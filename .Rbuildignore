@@ -1,6 +1,3 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^Data\
-^Documents\
-^Images\
