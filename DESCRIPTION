@@ -1,4 +1,4 @@
-Package: synthesisr
+Package: metaverse
 Version: 0.0.1
 Title: Workflows for evidence synthesis projects
 Authors@R: c(
@@ -35,7 +35,7 @@ Imports:
     rlang,
     yaml
 License: GPL-3
-BugReports: https://github.com/synthesisr/synthesisr
+BugReports: https://github.com/metaverse/metaverse
 LazyData: true
 RoxygenNote: 6.1.1.9000
 Remotes: elizagrames/litsearchr,
