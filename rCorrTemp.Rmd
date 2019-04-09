@@ -24,7 +24,7 @@ X<-"Intention"
 Y<-"Behaviour"
 
 #what is the name of the datafile with these correlations?
-filename<-"mydata.csv"
+filename<-"dat.molloy2014.csv"
 
 ```
 
@@ -39,9 +39,9 @@ specified.measure<-"ZCOR"
 
 ##This is a setup block to ensure that you have all of the packages needed for the analyses below. You can add additional packages if required
 #load metafor
-library("metafor")
+library(metafor)
 #load knitr
-library("knitr")
+library(knitr)
 ```
 
 ##About the analysis##
@@ -62,8 +62,9 @@ mydata<-read.csv(filename)
 
 Calculate r-to-z transformed correlations and corresponding sampling variances
 ```{r}
+library(metafor)
 # calculate r-to-z transformed correlations and corresponding sampling variances
-dat <- escalc(ri=r, ni=n, measure=specified.measure, data=mydata, append=TRUE)
+dat <- escalc(ri=ri, ni=ni, measure=specified.measure, data=mydata, append=TRUE)
 ```
 `r kable(head(dat, 2), caption="First few rows of the effect size table")`
 
@@ -99,7 +100,7 @@ This analysis is based on `r res$k` studies that evaluated the relationship betw
 ### Forest plot with Bells and whistles ###
 
 op <- par(cex=.75, font=12)
-forest(res, transf=transf.ztor,slab= paste(dat$StudyID, sep = ", "),
+forest(res, transf=transf.ztor,slab= paste(dat$authors, sep = ", "),
        xlim= c(-1.5, 2), cex= .75,
        mlab = "RE Model for All Studies",
        addfit=TRUE, addcred=FALSE)
