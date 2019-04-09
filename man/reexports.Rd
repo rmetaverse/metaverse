@@ -3,6 +3,10 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{screen_titles}
+\alias{screen_abstracts}
+\alias{screen_topics}
+\alias{screen_duplicates}
 \alias{rma}
 \alias{escalc}
 \title{Objects exported from other packages}
@@ -13,5 +17,7 @@ below to see their documentation.
 
 \describe{
   \item{metafor}{\code{\link[metafor]{rma}}, \code{\link[metafor]{escalc}}}
+
+  \item{revtools}{\code{\link[revtools]{screen_titles}}, \code{\link[revtools]{screen_abstracts}}, \code{\link[revtools]{screen_topics}}, \code{\link[revtools]{screen_duplicates}}}
 }}
 
