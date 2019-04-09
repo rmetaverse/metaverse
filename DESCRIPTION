@@ -30,6 +30,7 @@ Imports:
     metafor,
     magrittr,
     rcrossref,
+    weightr,
     yaml
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues

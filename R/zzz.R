@@ -5,6 +5,7 @@
 #' @import metafor
 #' @import revtools
 #' @import yaml
+#' @import weightr
 #'
 NULL
 
