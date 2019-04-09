@@ -1,6 +1,6 @@
-#' metaverse
+#' synthesisr
 #'
-#' metaverse is an awesome package for evidence synthesis in R.
+#' synthesisr is an awesome package for evidence synthesis in R.
 #' It combines functions from other packages.
 #'
 #' @Section Searching
