@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-metaverse
-=========
+metaverse <img src="metaverse.png" align="right" width="20%" height="20%" />
+============================================================================
 
-<img src="metaverse.png" width="175" /> Evidence synthesis (ES) is the process of identifying, collating and synthesising primary scientific research (such as articles and reports) for the purposes of providing reliable, transparent summaries.
+Evidence synthesis (ES) is the process of identifying, collating and synthesising primary scientific research (such as articles and reports) for the purposes of providing reliable, transparent summaries.
 
 The goal of this project is to collect, integrate and expand the universe of available functions for ES projects in R, via our proposed metaverse package. Like tidyverse, metaverse is envisioned as a collector package that makes it straightforward to install a set of functions – currently located in separate packages – for a common purpose.
 
