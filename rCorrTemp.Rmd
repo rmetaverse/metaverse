@@ -1,0 +1,129 @@
+---
+title: "Standard Meta Analysis Template for Correlations"
+description: This is a standard meta-analysis template. It is designed to document
+  a meta-analysis conducted in with the metaverse.
+output:
+  pdf_document: default
+  html_notebook: default
+Author: me
+---
+
+```{r echo=FALSE}
+##This is a setup block for you to provide some basic infomation used in other parts of the document
+
+## YOU NEED TO CHANGE THE FOLLOWING VALUES IN THE BLOCK
+
+# Type the last name of the first author here
+Author<-"LastName"
+
+# Review title
+Title<-"TitleGoesHere"
+
+# This file conducts a meta-analysis of correlations. Define the variable names for the relationship of interest
+X<-"Intention"
+Y<-"Behaviour"
+
+#what is the name of the datafile with these correlations?
+filename<-"mydata.csv"
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## YOU NORMALLY DO NOT NEED TO CHANGE THE FOLLOWING VALUES
+
+# This automatically generates the year from the system date
+Year<-as.numeric(format(Sys.Date(), "%Y"))
+
+# By default this analysis uses ZCOR (i.e. uses the r to z transformation) to conduct the analysis. You can change it here but only if you understand what you're doing
+specified.measure<-"ZCOR"
+
+##This is a setup block to ensure that you have all of the packages needed for the analyses below. You can add additional packages if required
+#load metafor
+library("metafor")
+#load knitr
+library("knitr")
+```
+
+##About the analysis##
+
+This file documents the analyses conducted for `r Author` (`r Year`) *`r Title`*
+
+Analyses were conducted using the file `r filename`, to examine the relationship between `r X` and `r Y`. `r ifelse(specified.measure=="ZCOR", "Correlation coefficents were transformed to Fisher Z correlation coefficents for analysis and backtransformed for reporting.", "")` `r ifelse(specified.measure=="COR", "Correlation coefficents (*r*) were used in analysis and reporting.","")`
+
+It is expected that datafiles for analysis are provided in the format outlined here: https://osf.io/6bk7b/wiki/Correlation%20Data%20Format/
+
+##Data importing and effect size calculation##
+Read `r filename` into R
+```{r}
+#Read your datafile into R
+mydata<-read.csv(filename)
+```
+`r kable(head(mydata, 2), caption="First few rows of the imported data")`
+
+Calculate r-to-z transformed correlations and corresponding sampling variances
+```{r}
+# calculate r-to-z transformed correlations and corresponding sampling variances
+dat <- escalc(ri=r, ni=n, measure=specified.measure, data=mydata, append=TRUE)
+```
+`r kable(head(dat, 2), caption="First few rows of the effect size table")`
+
+##Conducting the meta-analyis##
+```{r}
+# Run the random effect meta-analysis
+res <- rma(yi, vi, data=dat)
+
+# Back transform z to r correlations for reporting if ZCOR was used
+transformed<-ifelse(specified.measure=="ZCOR", 
+                    res_back<-predict(res, tranf=transf.ztor), 
+                    res_back<-predict(res))
+
+# Create a table of information from the res model
+res.table<-cbind.data.frame(res_back$pred, res_back$se, 
+                            res$pval, res_back$ci.lb, res_back$ci.ub,  res$k)
+colnames(res.table)<-c("r", "se", "p", "CI.LB", "CI.UB", "k")
+row.names(res.table)<-paste(X,"-",Y)
+
+# Create a table of heterogeneity information
+het.table<-cbind.data.frame(res$tau2, res$se.tau2, res$QE, 
+                            res$QEp, res$I2, res_back$cr.lb, res_back$cr.ub)
+colnames(het.table)<-c("tau2", "se.tau2", "Q", "p", "I2", "cr.lb", "cr.ub")
+row.names(het.table)<-paste(X,"-",Y)
+```
+
+##Results##
+**Summary**
+
+This analysis is based on `r res$k` studies that evaluated the relationship between `r X` and `r Y`. `r ifelse(res$measure=="ZCOR", "Correlation coefficents were transformed to Fisher Z correlation coefficents for analysis and backtransformed for reporting.", "Correlation coefficents (*r*) were used in analysis and reporting.")`
+
+```{r echo=FALSE}
+### Forest plot with Bells and whistles ###
+
+op <- par(cex=.75, font=12)
+forest(res, transf=transf.ztor,slab= paste(dat$StudyID, sep = ", "),
+       xlim= c(-1.5, 2), cex= .75,
+       mlab = "RE Model for All Studies",
+       addfit=TRUE, addcred=FALSE)
+```
+
+**What is the strength of the association between `r X` and `r Y`?**
+
+A random effects meta-analysis was conducted (k=`r res$k`) to explore the association between `r X` and `r Y`. The average correlation between these variables is r~+~=`r round(res_back$pred,3)`, (p=`r round(res$pval,3)`, 95% CI [`r round(res_back$ci.lb, 2)`, `r round(res_back$ci.ub, 2)`]). See table below.
+
+`r kable(res.table, digits=3, row.names=NA, col.names=c("r","se", "p", "CI Lower", "CI Upper", "k"), caption="Meta-Analysis Summary Table")`
+
+**Does the strength of the association vary across studies?**
+
+A Cochran's Q test was conducted to examine whether variations in the observed correlation are likely to be attributable soley to sampling error (Q~(df=`r res$k-1`)~=`r round(res$QE,2)`, p=`r ifelse(res$QEp < 0.001, "<.001", "round(res$QEp,3)")`). `r ifelse(res$QEp < 0.05, "The variation in the correlation is greater than would be expected from sampling error alone. It appears that the true correlation varies betweeen studies.", "There is no evidence that the true effect size varies between studies.")`
+
+The I^2^ statistics indicates the *proportion* of variance in the observed effect attributable to sampling error. In this instance, the I^2^ = `r round(res$I2,2)`%. 
+
+Note, this statistic is not an absolute measure of heterogeneity (although it is often interpreted as such). We strongly advise against using rules of thumb such as "small", "medium" or "large" when interpreting I^2^ values. Instead, researchers increasingly argue that the information provided credibility or prediction intervals is more useful in understanding the heterogeneity of true effect sizes in meta-analysis. In this instance the 95% credibility intervals are `r round(res_back$cr.lb,2)`,`r round(res_back$cr.ub,2)`. That is, it is estimated that 95% of true correlations fall between r=`r round(res_back$cr.lb,2)` and r=`r round(res_back$cr.ub,2)`.
+
+Heterogeneity statistics are summarised below
+`r kable(het.table, digits=3, row.names=NA, col.names=c("$\\tau$^2^", "se $\\tau$^2^", "Q", "p", "I^2^", "Credibility Lower", "Credibility Upper"),caption="Heterogeneity Summary Table")`
+
+\newpage
+#Notes#
+ ```{r}
+ sessionInfo()
+ ``` 
