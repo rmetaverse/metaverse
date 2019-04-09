@@ -46,6 +46,8 @@ library(metafor)
 library(knitr)
 #load weightr
 library(weightr)
+#load metaverse
+library(metaverse)
 ```
 
 ##About the analysis##
@@ -131,6 +133,14 @@ forest(res, transf=transf.ztor,slab= paste(dat$authors, sep = ", "),
        addfit=TRUE, addcred=FALSE)
 ```
 
+```{r echo=false}
+
+fp <- ma %>% 
+  forest_plot(group = group)
+
+fp
+
+```
 **What is the strength of the association between `r X` and `r Y`?**
 
 A random effects meta-analysis was conducted (k=`r res$k`) to explore the association between `r X` and `r Y`. The average correlation between these variables is r~+~=`r round(res_back$pred,3)`, (p=`r round(res$pval,3)`, 95% CI [`r round(res_back$ci.lb, 2)`, `r round(res_back$ci.ub, 2)`]). See table below.

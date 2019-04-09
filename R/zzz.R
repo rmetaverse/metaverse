@@ -6,6 +6,9 @@
 #' @import revtools
 #' @import yaml
 #' @import weightr
+#' @import stringr
+#' @import rlang
+#' @import broom
 #'
 NULL
 
