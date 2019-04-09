@@ -1,0 +1,234 @@
+---
+title: "Using the R package 'bibliometrix' for benchmark identification"
+author: "Alfredo Sanchez-Tojar"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  html_document:
+    code_folding: show #hide
+    theme: united
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, echo = FALSE, eval = TRUE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE)
+```
+
+The following collection of functions is a selected subset of all the functions explained in the vignettes of the R package `bibliometrix`:
+
+https://cran.r-project.org/web/packages/bibliometrix/vignettes/bibliometrix-vignette.html
+
+Bear in mind that the R package `bibliometrix` can currently deal with reference data extracted from: (1) Web of Science, (2) Scopus, (3) Cochrane, and (4) PubMed/MedLine (*Note: it should be possible to adjust it so that it can deal with data from other databases and search engines*).
+
+Further information can be found in the official webpage: http://www.bibliometrix.org/
+
+## 1.0 - Setting up and data preparation
+
+### 1.1 - Load package
+
+Loading the `bibliometrix`.
+
+```{r}
+pacman::p_load(bibliometrix)
+
+# Clear memory
+rm(list=ls())
+```
+
+
+### 1.2 - Load Data
+
+Loading an exemplary database provided by the authors of `bibliometrix`, and converting the .bib file into a data frame.
+
+```{r}
+# importing some demo data
+data <- readFiles("http://www.bibliometrix.org/datasets/savedrecs.bib")
+
+# convert it to a dataframe
+data.df <- convert2df(data, dbsource = "isi", format = "bibtex")
+```
+
+
+## 2.0 - Analyzing bibliometric data
+
+### 2.1 - Summary analysis
+
+The function `biblioAnalysis()` allows to identify some interesting paremeters such as:
+
+- Document types, which could be use to identify reviews.
+
+- Most productive authors.
+
+- Top manuscripts per citations.
+
+- Most relevant sources.
+
+- Most relevant keywords.
+
+```{r}
+# analyze data
+results <- biblioAnalysis(data.df, sep = ";")
+
+# print some summary results
+summary(results)
+```
+
+The results can additionally be plotted, which helps visualizing the most productive authors and countries, the annual scientific production, the average article citations/year, and the average total citations/year.
+
+```{r}
+plot(x = results)#, k = 10, pause = FALSE)
+```
+
+### 2.2 - What are the most cited papers?
+
+```{r}
+article.citations <- citations(data.df, field = "article", sep = ";")
+cbind(article.citations$Cited[1:10])
+```
+
+### 2.3 - Who are the most cited authors?
+
+```{r}
+author.citations <- citations(data.df, field = "author", sep = ";")
+cbind(author.citations$Cited[1:20])
+```
+
+*Note: consider how to deal with ANONYMOUS (see above)*
+
+### 2.4. What are the most cited authors and articles within your database, i.e. when using only the citations from within the database?
+
+This allows to estimate article and authors citations using exclusively the references contains withing the reference database imported. These citations counts *should* be use as complementary to the ones calculated above. 
+
+```{r}
+local.citations <- localCitations(data.df, sep = ";")
+local.citations$Papers[1:10,]
+local.citations$Authors[1:20,]
+```
+
+
+### 2.3 - Other potentially useful functions from `bibliometrix`
+
+#### 2.3.1. - Dominance factor
+
+The function `dominance` calculates the authors' dominance ranking as proposed by:
+
+Kumar, S., & Kumar, S. 2008. Collaboration in research productivity in oil seed research institutes of India. In Proceedings of Fourth International Conference on Webometrics, Informetrics and Scientometrics.
+
+The Dominance Factor is a ratio indicating the fraction of multi-authored articles in which a scholar appears as the first author.
+
+```{r}
+dominance.factor <- dominance(results)#, k = 10)
+dominance.factor[1:10,]
+```
+
+#### 2.3.2. - Lokta's law
+
+The function lotka estimates Lotka's law coefficients for scientific productivity (Lotka A.J., 1926). Lotka's law describes the frequency of publication by authors in any given field as an inverse square law, where the number of authors publishing a certain number of articles is a fixed ratio to the number of authors publishing a single article.
+
+One can obtain an estimate of the author productivity.
+
+```{r}
+loktas <- lotka(results)
+loktas$AuthorProd
+```
+
+## 3.0 - Bibliographic network matrices 
+
+### 3.1. Bipartite networks: 
+
+#### 3.1.1. Publication networks
+
+Bipartite networks can be used to observe the most relevant publication sources. `cocMatrix` estimates a rectangular binary matrix, representing a bipartite network where rows and columns are manuscripts and sources, respectively.
+
+```{r}
+bi.network <- cocMatrix(data.df, Field = "SO", sep = ";")
+sort(Matrix::colSums(bi.network), decreasing = TRUE)[1:5]
+```
+
+
+#### 3.1.2. Citation networks
+
+```{r}
+bi.network.cit <- cocMatrix(data.df, Field = "CR", sep = ".  ")
+sort(Matrix::colSums(bi.network.cit), decreasing = TRUE)[1:5]
+```
+
+
+#### 3.1.3. Author networks
+
+```{r}
+bi.network.aut <- cocMatrix(data.df, Field = "AU", sep = ".  ")
+cbind(sort(Matrix::colSums(bi.network.aut), decreasing = TRUE)[1:20])
+```
+
+
+#### 3.1.4. Author keyword networks
+
+```{r}
+bi.network.key <- cocMatrix(data.df, Field = "DE", sep = ".  ")
+cbind(sort(Matrix::colSums(bi.network.key), decreasing = TRUE)[1:10])
+```
+
+#### 3.1.5. Keyword plus networks
+
+```{r}
+bi.network.key.plus <- cocMatrix(data.df, Field = "ID", sep = ".  ")
+cbind(sort(Matrix::colSums(bi.network.key.plus), decreasing = TRUE)[1:10])
+```
+
+### 3.2. Bibliographic coupling
+
+Two articles are said to be bibliographically coupled if at least one cited source appears in the bibliographies or reference lists of both articles (Kessler, 1963). The function `biblioNetwork` calculates, starting from a bibliographic data frame, the most frequently used coupling networks: Authors, Sources, and Countries.
+
+#### 3.2.1. Article coupling
+
+Articles with only a few references tend to be more weakly bibliographically coupled, if coupling strength is measured simply according to the number of references that articles contain in common.
+
+```{r}
+NetMatrix.article <- biblioNetwork(data.df, analysis = "coupling", network = "references", sep = ".  ")
+
+# # general network summary stats
+# netstat.article <- networkStat(NetMatrix.article)
+```
+
+
+#### 3.2.2. Author coupling
+
+It might be more practical to switch to a relative measure of bibliographic coupling. The `normalizeSimilarity` function calculates Association strength, Inclusion, Jaccard or Salton similarity among vertices of a network. `normalizeSimilarity` can be recalled directly from the `networkPlot` function.
+
+```{r}
+NetMatrix.author <- biblioNetwork(data.df, analysis = "coupling", network = "authors", sep = ";")
+
+# # general network summary stats
+# netstat.author <- networkStat(NetMatrix.author)
+
+#plotting
+net=networkPlot(NetMatrix.author,  normalize = "salton", weighted=NULL, n = 100, Title = "Authors' Coupling", type = "fruchterman", size=5,size.cex=T,remove.multiple=TRUE,labelsize=0.8,label.n=10,label.cex=F)
+```
+
+### 3.3. Bibliographic co-citation
+
+Co-citation happens when two articles are cited in a third article. 
+
+```{r}
+cocitation <- biblioNetwork(data.df, analysis = "co-citation", network = "references", sep = ".  ")
+
+# general network summary stats
+netstat.cocitation <- networkStat(cocitation)
+```
+
+### 3.4. Bibliographic co-occurence
+
+```{r}
+
+NetMatrix.cooccurence <- biblioNetwork(data.df, analysis = "co-occurrences", network = "keywords", sep = ";")
+
+# general network summary stats
+netstat.cooccurence <- networkStat(NetMatrix.cooccurence)
+
+summary(netstat.cooccurence)#, k=10)
+```
+
