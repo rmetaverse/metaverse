@@ -23,13 +23,14 @@ Authors@R: c(
 Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
 Depends: R (>= 3.5.0)
 Imports:
-    rcrossref,
+    bibliometrix,
+    dplyr,
+    ggrepel,
     metacor,
     metafor,
     magrittr,
-    dplyr,
-    yaml,
-    ggrepel
+    rcrossref,
+    yaml
 License: GPL-3
 BugReports: https://github.com/mjwestgate/metaverse/issues
 LazyData: true

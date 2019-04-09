@@ -1,14 +1,23 @@
+#' @import bibliometrix
 #' @import dplyr
-#' @import litsearchr
 #' @import ggrepel
+#' @import litsearchr
+#' @import metafor
 #' @import revtools
 #' @import yaml
-#' @import metafor
 #'
 NULL
 
 #' @export
-metafor::rma
+revtools::screen_titles
+#' @export
+revtools::screen_abstracts
+#' @export
+revtools::screen_topics
+#' @export
+revtools::screen_duplicates
 
+#' @export
+metafor::rma
 #' @export
 metafor::escalc
