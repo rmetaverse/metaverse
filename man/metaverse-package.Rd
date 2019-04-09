@@ -12,6 +12,7 @@ It combines functions from other packages.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/rmetaverse/metaverse}
   \item Report bugs at \url{https://github.com/metaverse/metaverse}
 }
 
