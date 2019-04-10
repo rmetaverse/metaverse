@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ```
 
-```{r }
+```{r warning=FALSE}
 library(metaverse)
 library(broom)
 library(tidymeta)
@@ -25,6 +25,7 @@ library(mbmisc)
 library(ggplot2)
 library(dplyr)
 library(broom)
+library(pubBias)
 ```
 
 
@@ -95,6 +96,7 @@ ma <- ma_model_wkh %>%
 ma
 
 ```
+## Forest Plot
 
 ```{r warning=FALSE}
 fp <- ma %>% 
@@ -103,6 +105,12 @@ fp <- ma %>%
 fp
 ```
 
+## Publication Bias
+Estimates the Vevea and Hedges (1995) weight-function model using the weightr package.
+
+```{r warning=FALSE}
+weightrMeta(ma)
+```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # 
