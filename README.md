@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 metaverse <img src="man/metaverse.png" align="right" width="20%" height="20%" />
 
-[![Travis build status](https://travis-ci.com/rmetaverse/metaverse.svg?branch=master)](https://travis-ci.com/rmetaverse/metaverse/)
+[![Travis Build Status](https://travis-ci.com/rmetaverse/metaverse.svg?branch=master)](https://travis-ci.com/rmetaverse/metaverse/)
 
 Evidence synthesis (ES) is the process of identifying, collating and synthesising primary scientific research (such as articles and reports) for the purposes of providing reliable, transparent summaries.
 
