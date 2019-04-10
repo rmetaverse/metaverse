@@ -5,7 +5,6 @@
 #' @import metafor
 #' @import revtools
 #' @import yaml
-#' @import weightr
 #' @import stringr
 #' @import rlang
 #' @import broom
@@ -30,5 +29,3 @@ metafor::rma
 #' @export
 metafor::escalc
 
-#' @export
-metafor::dat.bcg

@@ -35,6 +35,7 @@ We begin by creating a random-effects model object via `metafor::`, which is inc
 ```{r data}
 # grab a dataset from metafor
 # from the metafor homepage
+dat.bcg <- metafor::dat.bcg
 ma_model <-
   escalc(
     measure = "RR",
