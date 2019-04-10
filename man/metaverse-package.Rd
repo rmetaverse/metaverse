@@ -13,7 +13,7 @@ It combines functions from other packages.
 Useful links:
 \itemize{
   \item \url{https://github.com/rmetaverse/metaverse}
-  \item Report bugs at \url{https://github.com/rmetaverse/metaverse/issues}
+  \item Report bugs at \url{https://github.com/metaverse/metaverse}
 }
 
 }
@@ -29,6 +29,7 @@ Authors:
   \item Luke McGuinness \email{luke.mcguinness@bristol.ac.uk} (0000-0001-8730-9761)
   \item Rose O'Dea \email{rose.eleanor.o.dea@gmail.com} (0000-0001-8177-5075)
   \item Alfredo Sanchez-Tojar \email{alfredo.tojar@gmail.com} (0000-0002-2886-0649)
+  \item Malcolm Barrett \email{malcolmbarrett@gmail.com} (0000-0003-0299-5825)
   \item Michael Schermann \email{mschermann@scu.edu} (0000-0003-1210-0554)
 }
 
