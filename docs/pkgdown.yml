@@ -4,4 +4,5 @@ pkgdown_sha: ~
 articles:
   extractMeta_WKH: extractMeta_WKH.html
   intro-to-robvis: intro-to-robvis.html
+  search_and_screening: search_and_screening.html
 
