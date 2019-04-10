@@ -50,6 +50,12 @@ Authors@R: c(
     role = c("aut"),
     email = "alfredo.tojar@gmail.com",
     comment = c(ORCID = "0000-0002-2886-0649")),
+    person(
+    given = "Malcolm",
+    family = "Barrett",
+    role = c("aut"),
+    email = "malcolmbarrett@gmail.com",
+    comment = c(ORCID = "0000-0003-0299-5825")),
   person(
     given = "Michael",
     family = "Schermann",
