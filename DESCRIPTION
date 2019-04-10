@@ -74,10 +74,10 @@ License: GPL-3
 BugReports: https://github.com/metaverse/metaverse
 LazyData: true
 RoxygenNote: 6.1.1.9000
-Remotes: elizagrames/litsearchr,
-         malcolmbarrett/mbmisc,
-         mjwestgate/revtools,
-         wviechtb/metadat
+Remotes: github::elizagrames/litsearchr,
+         github::malcolmbarrett/mbmisc,
+         github::mjwestgate/revtools,
+         github::wviechtb/metadat
 URL: https://github.com/rmetaverse/metaverse
 Suggests: 
     knitr,
