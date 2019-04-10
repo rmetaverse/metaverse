@@ -1,4 +1,5 @@
 #' @import bibliometrix
+#' @import devtools
 #' @import dplyr
 #' @import ggrepel
 #' @import litsearchr
@@ -30,5 +31,3 @@ metafor::rma
 #' @export
 metafor::escalc
 
-#' @export
-metafor::dat.bcg
