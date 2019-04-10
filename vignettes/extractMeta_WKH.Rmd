@@ -51,26 +51,30 @@ ma_model <-
 
 ### broom functionality
 
+We can now use `broom::` functionality to manage the output in a common format
+
 > 1. tidy() summarizes information about model components
 
 ```{r tidy}
-ma_model %>% tidy()
+ma_model %>% tidy() %>% knitr::kable()
 
 ```
 
 > 2. glance() reports information about the entire model
 
 ```{r glance}
-ma_model %>% glance()
+ma_model %>% glance()  %>% knitr::kable()
 ```
 
 > 3. augment() adds information about observations to a dataset ()
 
 ```{r}
-ma_model %>% augment()
+ma_model %>% augment() %>% knitr::kable()
 ```
 
 # Analysis
+
+We can use functions from `tidymeta::` to conduct subgroup meta-analyses
 
 ```{r}
 ma_model_wkh <- metafor::dat.bcg
@@ -85,12 +89,14 @@ ma <- ma_model_wkh %>%
     di = cneg,
     data = .) %>%
   dplyr::group_by(alloc) %>% 
-  meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE)
+  meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE) 
 
 ma
 
 ```
 ## Forest Plot
+
+`tidymeta::` also has some handy ggplot based graphics for meta-analysis
 
 ```{r warning=FALSE}
 fp <- ma %>% 
@@ -100,10 +106,10 @@ fp
 ```
 
 ## Publication Bias
-Estimates the Vevea and Hedges (1995) weight-function model using the weightr package.
+Estimates the Vevea and Hedges (1995) weight-function model using the `pubBias::` package.
 
 ```{r warning=FALSE}
-weightrMeta(ma)
+pubBias::weightrMeta(ma)
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}

@@ -91,6 +91,4 @@ DevPackage:
     tidymodels/broom,
     rmetaverse/pub_bias
 URL: https://github.com/rmetaverse/metaverse
-BugReports: https://github.com/rmetaverse/metaverse/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1

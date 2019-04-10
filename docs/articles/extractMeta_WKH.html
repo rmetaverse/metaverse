@@ -96,7 +96,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(metaverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────── metaverse 0.0.1 ──</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────────────────────── metaverse 0.0.1 ──</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; ✔ robvis     0.0.0.9000     ✔ revtools   0.3.0     </span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; ✔ metafor    2.1.0          ✔ metadat    0.1.0     </span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; ✔ tidymeta   0.1.0.9000     ✔ broom      0.5.2.9001</span></a>
@@ -129,105 +129,451 @@
 <div id="broom-functionality" class="section level3">
 <h3 class="hasAnchor">
 <a href="#broom-functionality" class="anchor"></a>broom functionality</h3>
+<p>We can now use <code>broom::</code> functionality to manage the output in a common format</p>
 <blockquote>
 <ol style="list-style-type: decimal">
 <li>tidy() summarizes information about model components</li>
 </ol>
 </blockquote>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">ma_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;      study    type    estimate  std.error    statistic      p.value</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 1        1   study -0.88931133 0.57060035  -1.55855377           NA</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; 2        2   study -1.58538866 0.44111350  -3.59406060           NA</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 3        3   study -1.34807315 0.64449047  -2.09168826           NA</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 4        4   study -1.44155119 0.14145682 -10.19075072           NA</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 5        5   study -0.21754732 0.22629665  -0.96133693           NA</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 6        6   study -0.78611559 0.08310005  -9.45986889           NA</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 7        7   study -1.62089822 0.47224702  -3.43231012           NA</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 8        8   study  0.01195233 0.06294108   0.18989718           NA</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 9        9   study -0.46941765 0.23755886  -1.97600567           NA</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 10      10   study -1.37134480 0.27023100  -5.07471312           NA</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 11      11   study -0.33935883 0.11141012  -3.04603244           NA</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 12      12   study  0.44591340 0.72972998   0.61106630           NA</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 13      13   study -0.01731395 0.26721650  -0.06479371           NA</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 14 Overall summary -0.71496816 0.18089221  -3.95245420 7.735374e-05</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;      conf.low    conf.high</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; 1  -2.0076675  0.229044811</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; 2  -2.4499552 -0.720822081</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; 3  -2.6112513 -0.084895040</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; 4  -1.7188015 -1.164300918</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 5  -0.6610806  0.225985955</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; 6  -0.9489887 -0.623242479</span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; 7  -2.5464854 -0.695311073</span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; 8  -0.1114099  0.135314580</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; 9  -0.9350245 -0.003810845</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; 10 -1.9009878 -0.841701775</span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; 11 -0.5577186 -0.120999013</span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; 12 -0.9843311  1.876157882</span></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt; 13 -0.5410487  0.506420775</span></a>
-<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">#&gt; 14 -1.0695104 -0.360425950</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">ma_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">study</th>
+<th align="left">type</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">study</td>
+<td align="right">-0.8893113</td>
+<td align="right">0.5706004</td>
+<td align="right">-1.5585538</td>
+<td align="right">NA</td>
+<td align="right">-2.0076675</td>
+<td align="right">0.2290448</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">study</td>
+<td align="right">-1.5853887</td>
+<td align="right">0.4411135</td>
+<td align="right">-3.5940606</td>
+<td align="right">NA</td>
+<td align="right">-2.4499552</td>
+<td align="right">-0.7208221</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">study</td>
+<td align="right">-1.3480731</td>
+<td align="right">0.6444905</td>
+<td align="right">-2.0916883</td>
+<td align="right">NA</td>
+<td align="right">-2.6112513</td>
+<td align="right">-0.0848950</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">study</td>
+<td align="right">-1.4415512</td>
+<td align="right">0.1414568</td>
+<td align="right">-10.1907507</td>
+<td align="right">NA</td>
+<td align="right">-1.7188015</td>
+<td align="right">-1.1643009</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">study</td>
+<td align="right">-0.2175473</td>
+<td align="right">0.2262966</td>
+<td align="right">-0.9613369</td>
+<td align="right">NA</td>
+<td align="right">-0.6610806</td>
+<td align="right">0.2259860</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">study</td>
+<td align="right">-0.7861156</td>
+<td align="right">0.0831001</td>
+<td align="right">-9.4598689</td>
+<td align="right">NA</td>
+<td align="right">-0.9489887</td>
+<td align="right">-0.6232425</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">study</td>
+<td align="right">-1.6208982</td>
+<td align="right">0.4722470</td>
+<td align="right">-3.4323101</td>
+<td align="right">NA</td>
+<td align="right">-2.5464854</td>
+<td align="right">-0.6953111</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">study</td>
+<td align="right">0.0119523</td>
+<td align="right">0.0629411</td>
+<td align="right">0.1898972</td>
+<td align="right">NA</td>
+<td align="right">-0.1114099</td>
+<td align="right">0.1353146</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">study</td>
+<td align="right">-0.4694176</td>
+<td align="right">0.2375589</td>
+<td align="right">-1.9760057</td>
+<td align="right">NA</td>
+<td align="right">-0.9350245</td>
+<td align="right">-0.0038108</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">study</td>
+<td align="right">-1.3713448</td>
+<td align="right">0.2702310</td>
+<td align="right">-5.0747131</td>
+<td align="right">NA</td>
+<td align="right">-1.9009878</td>
+<td align="right">-0.8417018</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">study</td>
+<td align="right">-0.3393588</td>
+<td align="right">0.1114101</td>
+<td align="right">-3.0460324</td>
+<td align="right">NA</td>
+<td align="right">-0.5577186</td>
+<td align="right">-0.1209990</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">study</td>
+<td align="right">0.4459134</td>
+<td align="right">0.7297300</td>
+<td align="right">0.6110663</td>
+<td align="right">NA</td>
+<td align="right">-0.9843311</td>
+<td align="right">1.8761579</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">study</td>
+<td align="right">-0.0173139</td>
+<td align="right">0.2672165</td>
+<td align="right">-0.0647937</td>
+<td align="right">NA</td>
+<td align="right">-0.5410487</td>
+<td align="right">0.5064208</td>
+</tr>
+<tr class="even">
+<td align="left">Overall</td>
+<td align="left">summary</td>
+<td align="right">-0.7149682</td>
+<td align="right">0.1808922</td>
+<td align="right">-3.9524542</td>
+<td align="right">7.74e-05</td>
+<td align="right">-1.0695104</td>
+<td align="right">-0.3604260</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <ol start="2" style="list-style-type: decimal">
 <li>glance() reports information about the entire model</li>
 </ol>
 </blockquote>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ma_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glance</span>()</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt;    i.squared h.squared tau.squared    logLik deviance      AIC      BIC</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; ML  92.33034  13.03839   0.3180685 -12.69434 37.17454 29.38867 30.51857</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;        AICc</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; ML 30.58867</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ma_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glance</span>()  <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">i.squared</th>
+<th align="right">h.squared</th>
+<th align="right">tau.squared</th>
+<th align="right">logLik</th>
+<th align="right">deviance</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">AICc</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>ML</td>
+<td align="right">92.33034</td>
+<td align="right">13.03839</td>
+<td align="right">0.3180685</td>
+<td align="right">-12.69434</td>
+<td align="right">37.17454</td>
+<td align="right">29.38867</td>
+<td align="right">30.51857</td>
+<td align="right">30.58867</td>
+</tr></tbody>
+</table>
 <blockquote>
 <ol start="3" style="list-style-type: decimal">
 <li>augment() adds information about observations to a dataset ()</li>
 </ol>
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">ma_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">augment</span>()</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;              y      .fitted   .se.fit conf.low.fit conf.high.fit</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; 1  -0.88931133 -0.801121802 0.4114171   -1.6074845   0.005240934</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; 2  -1.58538866 -1.255012150 0.3541752   -1.9491828  -0.560841469</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; 3  -1.34807315 -0.989526038 0.4366086   -1.8452632  -0.133788876</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; 4  -1.44155119 -1.398546540 0.1376238   -1.6682843  -1.128808793</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 5  -0.21754732 -0.286527763 0.2115132   -0.7010859   0.128030422</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 6  -0.78611559 -0.784603721 0.0823022   -0.9459131  -0.623294381</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 7  -1.62089822 -1.247504497 0.3696700   -1.9720444  -0.522964568</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 8   0.01195233  0.003009836 0.0625923   -0.1196688   0.125688496</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; 9  -0.46941765 -0.506419914 0.2206199   -0.9388269  -0.074012928</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 10 -1.37134480 -1.248786407 0.2460294   -1.7309951  -0.766577672</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 11 -0.33935883 -0.353465985 0.1095089   -0.5680994  -0.138832538</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 12  0.44591340 -0.280861641 0.4603840   -1.1831976   0.621474350</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; 13 -0.01731395 -0.145219449 0.2437487   -0.6229582   0.332519262</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt;         .resid       .hat      .cooksd .std.resid     .dffits .cov.ratio</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; 1  -0.17434317 0.05083791 0.0012736271 -0.2131968 -0.03468678  1.1559082</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt; 2  -0.87042050 0.06382915 0.1127214083 -1.2873585 -0.34332762  1.0063461</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt; 3  -0.63310499 0.04461462 0.0251088777 -0.7465310 -0.15668948  1.0917526</span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt; 4  -0.72658303 0.09678813 0.2072827885 -1.3855766 -0.47745537  1.0222047</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt; 5   0.49742084 0.08861056 0.0741674045  0.8469886  0.26855590  1.1261213</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt; 6  -0.07114743 0.10069106 0.0005643302 -0.1187102 -0.02244539  1.2188854</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; 7  -0.90593006 0.06047468 0.1086792583 -1.3017502 -0.33710008  0.9993512</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; 8   0.72692049 0.10161159 0.1977840906  1.4241116  0.47022382  1.0191957</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; 9   0.24555051 0.08737450 0.0211743805  0.4071677  0.13957370  1.1853279</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#&gt; 10 -0.65637664 0.08366799 0.1127990192 -1.1093255 -0.33941452  1.0687229</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#&gt; 11  0.37560933 0.09901331 0.0559519402  0.6703185  0.22939286  1.1673499</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">#&gt; 12  1.16088156 0.03847046 0.0553644812  1.2982901  0.23858944  0.9770428</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">#&gt; 13  0.69765421 0.08401603 0.1196452508  1.1878730  0.35243479  1.0520605</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">#&gt;    tau.squared.del    qe.del   .weight    .dfbetas</span></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">#&gt; 1        0.3557591 151.58257  5.083791 -0.03410290</span></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">#&gt; 2        0.2956598 145.31761  6.382915 -0.34573742</span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt; 3        0.3347164 150.19704  4.461462 -0.15522258</span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt; 4        0.2873981  96.56259  9.678813 -0.47417749</span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt; 5        0.3285400 151.32001  8.861056  0.26879682</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt; 6        0.3571164 128.18666 10.069106 -0.02266531</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt; 7        0.2944645 145.82964  6.047468 -0.34003227</span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt; 8        0.2840955  67.98581 10.161159  0.46532395</span></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt; 9        0.3506259 152.20506  8.737450  0.13987802</span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt; 10       0.3099100 139.82707  8.366799 -0.33938820</span></a>
-<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt; 11       0.3389876 151.46550  9.901331  0.23052315</span></a>
-<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt; 12       0.2947524 150.78683  3.847046  0.24260109</span></a>
-<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt; 13       0.3037544 149.78842  8.401603  0.35236393</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">ma_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">y</th>
+<th align="right">.fitted</th>
+<th align="right">.se.fit</th>
+<th align="right">conf.low.fit</th>
+<th align="right">conf.high.fit</th>
+<th align="right">.resid</th>
+<th align="right">.hat</th>
+<th align="right">.cooksd</th>
+<th align="right">.std.resid</th>
+<th align="right">.dffits</th>
+<th align="right">.cov.ratio</th>
+<th align="right">tau.squared.del</th>
+<th align="right">qe.del</th>
+<th align="right">.weight</th>
+<th align="right">.dfbetas</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.8893113</td>
+<td align="right">-0.8011218</td>
+<td align="right">0.4114171</td>
+<td align="right">-1.6074845</td>
+<td align="right">0.0052409</td>
+<td align="right">-0.1743432</td>
+<td align="right">0.0508379</td>
+<td align="right">0.0012736</td>
+<td align="right">-0.2131968</td>
+<td align="right">-0.0346868</td>
+<td align="right">1.1559082</td>
+<td align="right">0.3557591</td>
+<td align="right">151.58257</td>
+<td align="right">5.083791</td>
+<td align="right">-0.0341029</td>
+</tr>
+<tr class="even">
+<td align="right">-1.5853887</td>
+<td align="right">-1.2550121</td>
+<td align="right">0.3541752</td>
+<td align="right">-1.9491828</td>
+<td align="right">-0.5608415</td>
+<td align="right">-0.8704205</td>
+<td align="right">0.0638291</td>
+<td align="right">0.1127214</td>
+<td align="right">-1.2873585</td>
+<td align="right">-0.3433276</td>
+<td align="right">1.0063461</td>
+<td align="right">0.2956598</td>
+<td align="right">145.31761</td>
+<td align="right">6.382915</td>
+<td align="right">-0.3457374</td>
+</tr>
+<tr class="odd">
+<td align="right">-1.3480731</td>
+<td align="right">-0.9895260</td>
+<td align="right">0.4366086</td>
+<td align="right">-1.8452632</td>
+<td align="right">-0.1337889</td>
+<td align="right">-0.6331050</td>
+<td align="right">0.0446146</td>
+<td align="right">0.0251089</td>
+<td align="right">-0.7465310</td>
+<td align="right">-0.1566895</td>
+<td align="right">1.0917526</td>
+<td align="right">0.3347164</td>
+<td align="right">150.19704</td>
+<td align="right">4.461462</td>
+<td align="right">-0.1552226</td>
+</tr>
+<tr class="even">
+<td align="right">-1.4415512</td>
+<td align="right">-1.3985465</td>
+<td align="right">0.1376238</td>
+<td align="right">-1.6682843</td>
+<td align="right">-1.1288088</td>
+<td align="right">-0.7265830</td>
+<td align="right">0.0967881</td>
+<td align="right">0.2072828</td>
+<td align="right">-1.3855766</td>
+<td align="right">-0.4774554</td>
+<td align="right">1.0222047</td>
+<td align="right">0.2873981</td>
+<td align="right">96.56260</td>
+<td align="right">9.678813</td>
+<td align="right">-0.4741775</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.2175473</td>
+<td align="right">-0.2865278</td>
+<td align="right">0.2115132</td>
+<td align="right">-0.7010859</td>
+<td align="right">0.1280304</td>
+<td align="right">0.4974208</td>
+<td align="right">0.0886106</td>
+<td align="right">0.0741674</td>
+<td align="right">0.8469886</td>
+<td align="right">0.2685559</td>
+<td align="right">1.1261213</td>
+<td align="right">0.3285400</td>
+<td align="right">151.32001</td>
+<td align="right">8.861056</td>
+<td align="right">0.2687968</td>
+</tr>
+<tr class="even">
+<td align="right">-0.7861156</td>
+<td align="right">-0.7846037</td>
+<td align="right">0.0823022</td>
+<td align="right">-0.9459131</td>
+<td align="right">-0.6232944</td>
+<td align="right">-0.0711474</td>
+<td align="right">0.1006911</td>
+<td align="right">0.0005643</td>
+<td align="right">-0.1187102</td>
+<td align="right">-0.0224454</td>
+<td align="right">1.2188854</td>
+<td align="right">0.3571164</td>
+<td align="right">128.18666</td>
+<td align="right">10.069106</td>
+<td align="right">-0.0226653</td>
+</tr>
+<tr class="odd">
+<td align="right">-1.6208982</td>
+<td align="right">-1.2475045</td>
+<td align="right">0.3696700</td>
+<td align="right">-1.9720444</td>
+<td align="right">-0.5229646</td>
+<td align="right">-0.9059301</td>
+<td align="right">0.0604747</td>
+<td align="right">0.1086793</td>
+<td align="right">-1.3017502</td>
+<td align="right">-0.3371001</td>
+<td align="right">0.9993512</td>
+<td align="right">0.2944645</td>
+<td align="right">145.82964</td>
+<td align="right">6.047468</td>
+<td align="right">-0.3400323</td>
+</tr>
+<tr class="even">
+<td align="right">0.0119523</td>
+<td align="right">0.0030098</td>
+<td align="right">0.0625923</td>
+<td align="right">-0.1196688</td>
+<td align="right">0.1256885</td>
+<td align="right">0.7269205</td>
+<td align="right">0.1016116</td>
+<td align="right">0.1977841</td>
+<td align="right">1.4241116</td>
+<td align="right">0.4702238</td>
+<td align="right">1.0191957</td>
+<td align="right">0.2840955</td>
+<td align="right">67.98581</td>
+<td align="right">10.161159</td>
+<td align="right">0.4653240</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.4694176</td>
+<td align="right">-0.5064199</td>
+<td align="right">0.2206199</td>
+<td align="right">-0.9388269</td>
+<td align="right">-0.0740129</td>
+<td align="right">0.2455505</td>
+<td align="right">0.0873745</td>
+<td align="right">0.0211744</td>
+<td align="right">0.4071677</td>
+<td align="right">0.1395737</td>
+<td align="right">1.1853279</td>
+<td align="right">0.3506259</td>
+<td align="right">152.20506</td>
+<td align="right">8.737450</td>
+<td align="right">0.1398780</td>
+</tr>
+<tr class="even">
+<td align="right">-1.3713448</td>
+<td align="right">-1.2487864</td>
+<td align="right">0.2460294</td>
+<td align="right">-1.7309951</td>
+<td align="right">-0.7665777</td>
+<td align="right">-0.6563766</td>
+<td align="right">0.0836680</td>
+<td align="right">0.1127990</td>
+<td align="right">-1.1093255</td>
+<td align="right">-0.3394145</td>
+<td align="right">1.0687229</td>
+<td align="right">0.3099100</td>
+<td align="right">139.82707</td>
+<td align="right">8.366799</td>
+<td align="right">-0.3393882</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.3393588</td>
+<td align="right">-0.3534660</td>
+<td align="right">0.1095089</td>
+<td align="right">-0.5680994</td>
+<td align="right">-0.1388325</td>
+<td align="right">0.3756093</td>
+<td align="right">0.0990133</td>
+<td align="right">0.0559519</td>
+<td align="right">0.6703185</td>
+<td align="right">0.2293929</td>
+<td align="right">1.1673499</td>
+<td align="right">0.3389876</td>
+<td align="right">151.46550</td>
+<td align="right">9.901331</td>
+<td align="right">0.2305232</td>
+</tr>
+<tr class="even">
+<td align="right">0.4459134</td>
+<td align="right">-0.2808616</td>
+<td align="right">0.4603840</td>
+<td align="right">-1.1831976</td>
+<td align="right">0.6214744</td>
+<td align="right">1.1608816</td>
+<td align="right">0.0384705</td>
+<td align="right">0.0553645</td>
+<td align="right">1.2982901</td>
+<td align="right">0.2385894</td>
+<td align="right">0.9770428</td>
+<td align="right">0.2947524</td>
+<td align="right">150.78683</td>
+<td align="right">3.847046</td>
+<td align="right">0.2426011</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.0173139</td>
+<td align="right">-0.1452194</td>
+<td align="right">0.2437487</td>
+<td align="right">-0.6229582</td>
+<td align="right">0.3325193</td>
+<td align="right">0.6976542</td>
+<td align="right">0.0840160</td>
+<td align="right">0.1196453</td>
+<td align="right">1.1878730</td>
+<td align="right">0.3524348</td>
+<td align="right">1.0520605</td>
+<td align="right">0.3037544</td>
+<td align="right">149.78842</td>
+<td align="right">8.401603</td>
+<td align="right">0.3523639</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#analysis" class="anchor"></a>Analysis</h1>
+<p>We can use functions from <code>tidymeta::</code> to conduct subgroup meta-analyses</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">ma_model_wkh &lt;-<span class="st"> </span>metafor<span class="op">::</span>dat.bcg</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
@@ -240,7 +586,7 @@
 <a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="dt">di =</span> cneg,</a>
 <a class="sourceLine" id="cb6-11" data-line-number="11">    <span class="dt">data =</span> .) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(alloc) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="st">  </span><span class="kw">meta_analysis</span>(<span class="dt">yi =</span> yi, <span class="dt">vi =</span> vi, <span class="dt">slab =</span> author, <span class="dt">exponentiate =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="st">  </span><span class="kw">meta_analysis</span>(<span class="dt">yi =</span> yi, <span class="dt">vi =</span> vi, <span class="dt">slab =</span> author, <span class="dt">exponentiate =</span> <span class="ot">TRUE</span>) </a>
 <a class="sourceLine" id="cb6-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb6-15" data-line-number="15">ma</a>
 <a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; # A tibble: 17 x 11</span></a>
@@ -264,11 +610,46 @@
 <a class="sourceLine" id="cb6-34" data-line-number="34"><span class="co">#&gt; 16 syst… Subg… summ…    0.654    0.360    -1.18    2.38e-1   0.323 </span></a>
 <a class="sourceLine" id="cb6-35" data-line-number="35"><span class="co">#&gt; 17 Summ… Over… summ…    0.489    0.180    -3.97    7.05e-5   0.344 </span></a>
 <a class="sourceLine" id="cb6-36" data-line-number="36"><span class="co">#&gt; # … with 3 more variables: conf.high &lt;dbl&gt;, meta &lt;list&gt;, weight &lt;dbl&gt;</span></a></code></pre></div>
+<div id="forest-plot" class="section level2">
+<h2 class="hasAnchor">
+<a href="#forest-plot" class="anchor"></a>Forest Plot</h2>
+<p><code>tidymeta::</code> also has some handy ggplot based graphics for meta-analysis</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fp &lt;-<span class="st"> </span>ma <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">forest_plot</span>(<span class="dt">group =</span> alloc)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">fp</a></code></pre></div>
 <p><img src="extractMeta_WKH_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</div>
+<div id="publication-bias" class="section level2">
+<h2 class="hasAnchor">
+<a href="#publication-bias" class="anchor"></a>Publication Bias</h2>
+<p>Estimates the Vevea and Hedges (1995) weight-function model using the <code>pubBias::</code> package.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">pubBias<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pubBias/topics/weightrMeta">weightrMeta</a></span>(ma)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; Unadjusted Model (k = 17):</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; tau^2 (estimated amount of total heterogeneity): 0.0000 (SE = 0.0516)</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; tau (square root of estimated tau^2 value):  0.0000</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; Model Results:</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;           estimate std.error z-stat      p-val  ci.lb  ci.ub</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; Intercept   0.6212    0.1138  5.458 4.8221e-08 0.3981 0.8442</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; Adjusted Model (k = 17):</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; tau^2 (estimated amount of total heterogeneity): 0.0000 (SE =   NaN)</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; tau (square root of estimated tau^2 value):  0.0000</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; Model Results:</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;               estimate std.error z-stat      p-val   ci.lb  ci.ub</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; Intercept       0.8846    0.1295  6.833 8.3143e-12  0.6309  1.138</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; 0.025 &lt; p &lt; 1  10.6636   10.4276  1.023    0.30648 -9.7741 31.101</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; Likelihood Ratio Test:</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; X^2(df = 1) = 5.590652, p-val = 0.018057</span></a></code></pre></div>
+</div>
 </div>
   </div>
 
@@ -278,7 +659,12 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#demonstration">demonstration</a></li>
-      <li><a href="#analysis">Analysis</a></li>
+      <li>
+<a href="#analysis">Analysis</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#forest-plot">Forest Plot</a></li>
+      <li><a href="#publication-bias">Publication Bias</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
@@ -287,7 +673,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Martin Westgate, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Michael Schermann.</p>
+  <p>Developed by Martin Westgate, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Malcolm Barrett, Michael Schermann.</p>
 </div>
 
 <div class="pkgdown">

@@ -15,7 +15,7 @@ Naive search: TS=(("picoides borealis" OR "red-cockaded woodpecker*" OR "red coc
 
 Searches were conducted on April 10, 2019 with no date restrictions. We searched Scopus (1970-2019) and five databases in Web of Science: the Web of Science Core Collection (1900-2019), BIOSIS Previews (1926-2019), Current Contents Connect (1998-2019), MEDLINE (1950-2019), and Zoological Record (1945-2019).
 
-```{r}
+```{r eval = FALSE}
 search_directory <- "~/litsearchr/inst/extdata/borealis/"
 
 naiveimport <- litsearchr::import_results(directory = search_directory, remove_duplicates = FALSE, clean_dataset = TRUE, save_full_dataset = FALSE)
@@ -29,7 +29,7 @@ naiveresults <- dedupe_stage2
 
 ## Identify potential keywords
 
-```{r}
+```{r eval = FALSE}
 #rakedkeywords <- litsearchr::extract_terms(naiveresults, type="RAKE", min_freq = 2, title = TRUE, abstract = TRUE, ngrams = TRUE, n=2)
 
 # Note: if you can't run rapidraker due to rJava issues, the output is stored in litsearchr::rakedkeywords
@@ -40,7 +40,7 @@ taggedkeywords <- litsearchr::extract_terms(naiveresults, type="tagged", min_fre
 
 ## Build the keyword co-occurrence network
 
-```{r}
+```{r eval = FALSE}
 naivedictionary <- litsearchr::make_dictionary(terms=list(rakedkeywords, taggedkeywords))
 naivecorpus <- litsearchr::make_corpus(naiveresults)
 naivedfm <- litsearchr::create_dfm(naivecorpus, my_dic=naivedictionary)
@@ -49,24 +49,24 @@ naivegraph <- litsearchr::create_network(naivedfm, min_studies=1, min_occurrence
 
 ## Identify change points in keyword importance 
 
-```{r}
+```{r eval = FALSE}
 plot(sort(igraph::strength(BBWO_graph)), ylab="Node strength", main="Ranked node strengths", xlab="Rank")
 ```
 
-```{r}
+```{r eval = FALSE}
 splinecutoff <- litsearchr::find_cutoff(naivegraph, method = "spline", degrees = 2, knot_num = 3, 
                                         diagnostics = TRUE, importance_method = "strength")
 # note: if you don't want to wait for the freepsgen algorithm, 
 ```
 
 
-```{r}
+```{r eval = FALSE}
 reducedgraph <- litsearchr::reduce_graph(naivegraph, cutoff_strength = splinecutoff[1])
 searchterms <- litsearchr::get_keywords(reducedgraph, savekeywords = FALSE, makewordle = FALSE)
 ```
 
 ## Group terms into concepts
-```{r}
+```{r eval = FALSE}
 searchterms
 groupedterms <- c()
 for(i in 1:length(searchterms)){
@@ -107,7 +107,7 @@ mysearchterms <- list(woodpeckers, fire, abundance)
 
 ## Write Boolean searches
 
-```{r}
+```{r eval = FALSE}
 woodpecker_search <- litsearchr::write_search(groupdata = mysearchterms, 
                                           languages = "English", stemming = TRUE,
                                           exactphrase = TRUE, writesearch = FALSE, 
