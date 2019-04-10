@@ -88,7 +88,7 @@ ma <- ma_model_wkh %>%
     bi = tneg,
     ci = cpos,
     di = cneg,
-    data = ma_model_wkh) %>%
+    data = .) %>%
   group_by(alloc) %>% 
   meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE)
 

@@ -9,6 +9,7 @@
 #' @import yaml
 #' @import stringr
 #' @import rlang
+#' @import mbmisc
 #' @import broom
 #'
 NULL
