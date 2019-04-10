@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
   fig.width = 8,
   fig.height = 2.41)
   library(tidyverse)
-library(robvis)
+#library(robvis)
+library(metaverse)
 ```
 ## R Markdown
 
@@ -26,7 +27,7 @@ library(robvis)
 #Import data for ROB2.0 based risk-of-bias assessments
 
 # Produce barchart summarising risk of bias for each domain, weighted by study precision.
-robvis::rob_summary(robvis::data_rob, tool = "ROB2", save = "No")
+rob_summary(robvis::data_rob, tool = "ROB2", save = "No")
 ```
 
 Users can also produce summary plots for two other commonly used tools: ROBINS-I and QUADAS-2

@@ -76,7 +76,8 @@ Imports:
     yaml,
     litsearchr,
     broom (>= 0.5.2.9001),
-    mbmisc (>= 0.0.0.9000)
+    mbmisc (>= 0.0.0.9000),
+    robvis (>= 0.0.0.9000)
 License: GPL-3
 BugReports: https://github.com/metaverse/metaverse
 LazyData: true
@@ -86,7 +87,8 @@ DevPackage:
     malcolmbarrett/mbmisc,
     mjwestgate/revtools,
     wviechtb/metadat,
-    tidymodels/broom
+    tidymodels/broom,
+    mcguinlu/robvis
 URL: https://github.com/rmetaverse/metaverse
 Suggests: 
     knitr,
