@@ -13,7 +13,7 @@ It combines functions from other packages.
 Useful links:
 \itemize{
   \item \url{https://github.com/rmetaverse/metaverse}
-  \item Report bugs at \url{https://github.com/metaverse/metaverse}
+  \item Report bugs at \url{https://github.com/rmetaverse/metaverse/issues}
 }
 
 }
