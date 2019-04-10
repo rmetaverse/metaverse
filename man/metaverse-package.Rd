@@ -18,13 +18,13 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Martin Westgate \email{martinjwestgate@gmail.com} (0000-0003-0854-2034)
+\strong{Maintainer}: W. Kyle Hamilton \email{whamilton@ucmerced.edu} (0000-0002-8642-7990)
 
 Authors:
 \itemize{
+  \item Martin Westgate \email{martinjwestgate@gmail.com} (0000-0003-0854-2034)
   \item Eliza Grames \email{eliza.grames@uconn.edu} (0000-0003-1743-6815)
   \item Charles Gray \email{charlestigray@gmail.com} (0000-0002-9978-011X)
-  \item W. Kyle Hamilton \email{whamilton@ucmerced.edu} (0000-0002-8642-7990)
   \item Emily Kothe \email{emily.kothe@deakin.edu.au} (0000-0003-1210-0554)
   \item Luke McGuinness \email{luke.mcguinness@bristol.ac.uk} (0000-0001-8730-9761)
   \item Rose O'Dea \email{rose.eleanor.o.dea@gmail.com} (0000-0001-8177-5075)
