@@ -83,12 +83,12 @@ Remotes:
     tidymodels/broom,
     malcolmbarrett/tidymeta,
     wviechtb/metadat,
-    mbmisc (>= 0.0.0.9000),
-    pubBias
+    malcolmbarrett/mbmisc,
+    rmetaverse/pubBias
 Suggests: 
     testthat
 License: GPL-3
-BugReports: https://github.com/metaverse/metaverse
+BugReports: https://github.com/rmetaverse/metaverse
 LazyData: true
 RoxygenNote: 6.1.1.9000
 DevPackage: 
