@@ -82,7 +82,7 @@ Remotes:
     elizagrames/litsearchr,
     tidymodels/broom,
     malcolmbarrett/tidymeta,
-    wviechtb/metadat
+    wviechtb/metadat,
     mbmisc (>= 0.0.0.9000),
     pubBias
 Suggests: 
