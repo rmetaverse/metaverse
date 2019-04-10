@@ -85,11 +85,7 @@ DevPackage:
     elizagrames/litsearchr,
     malcolmbarrett/mbmisc,
     mjwestgate/revtools,
-    wviechtb/metadat
-Remotes: 
-    elizagrames/litsearchr,
-    malcolmbarrett/mbmisc,
-    mjwestgate/revtools,
+    wviechtb/metadat,
     tidymodels/broom
 URL: https://github.com/rmetaverse/metaverse
 Suggests: 
