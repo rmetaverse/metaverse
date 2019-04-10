@@ -43,7 +43,7 @@ ma_model <-
     ci = cpos,
     di = cneg,
     data = dat.bcg
-  ) %>% rma(yi, vi, data = dat, method = "EB")
+  ) %>% rma(yi, vi, data = ., method = "EB")
 
 ```
 

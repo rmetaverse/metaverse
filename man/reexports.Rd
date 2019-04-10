@@ -9,6 +9,7 @@
 \alias{screen_duplicates}
 \alias{rma}
 \alias{escalc}
+\alias{dat.bcg}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,7 +17,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{metafor}{\code{\link[metafor]{rma}}, \code{\link[metafor]{escalc}}}
+  \item{metafor}{\code{\link[metafor]{rma}}, \code{\link[metafor]{escalc}}, \code{\link[metafor]{dat.bcg}}}
 
   \item{revtools}{\code{\link[revtools]{screen_titles}}, \code{\link[revtools]{screen_abstracts}}, \code{\link[revtools]{screen_topics}}, \code{\link[revtools]{screen_duplicates}}}
 }}
