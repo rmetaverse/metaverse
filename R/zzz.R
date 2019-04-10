@@ -30,3 +30,11 @@ metafor::rma
 #' @export
 metafor::escalc
 
+#' @export
+broom::tidy
+
+#' @export
+broom::augment
+
+#' @export
+broom::glance

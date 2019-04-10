@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 # library(metaverse)
 library(tidyverse)
 library(metafor)
-library(metabroom)
+library(broom)
 # library(metaverse)
 ```
 
