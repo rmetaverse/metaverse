@@ -20,13 +20,6 @@ knitr::opts_chunk$set(
 ```{r warning=FALSE}
 library(metaverse)
 library(mbmisc)
-<<<<<<< HEAD
-=======
-library(ggplot2)
-library(dplyr)
-library(broom)
-library(pubBias)
->>>>>>> 6026f20c71ab18b096e39641201812da5539ccbd
 ```
 
 
