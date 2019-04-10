@@ -1,0 +1,71 @@
+---
+title: "Formats for Screening"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Notes on formatting requirements for different abstract screening software      
+
+## Within R      
+
+#### [revtools](http://revtools.net/docs/Screening.html)         
+`screen_titles` and `screen_abstracts`         
+- takes class of bibliography or data.frame    
+
+#### [metagear](https://cran.r-project.org/web/packages/metagear/vignettes/metagear_basic_vignette_v0.4.pdf)         
+`abstract_screener`     
+- takes a dataframe containing bibliographic data (tile, abstract, journal) from
+multiple study references      
+dataframe names: "AUTHORS" "YEAR" "TITLE" "JOURNAL" "VOLUME" "LPAGES" "UPAGES" "DOI"
+"ABSTRACT"     
+
+## Outside R      
+
+#### [Abstrackr](http://abstrackr.cebm.brown.edu/account/my_work)      
+
+"The easiest (and suggested!) format is a list of PubMed IDs, one-per line. Such a list can be exported directly from the PubMed search results page as follows. Click Send to, then select PMID List as the Format. Then click the 'Create file' button (an image is shown below). abstrackr will fetch the corresponding titles and abstracts for each id.         
+
+Alternatively, abstrackr can import arbitrary tab-separated files. More specifically, this requires that you create a header row specifying which field each row contains. To this end, abstrackr recognizes special fields; it's important that you use the exact same spellings and capitalizations (all lower case) shown here.        
+
+The following fields are mandatory, i.e., must be present in the header row (\t denotes a tab character):
+
+id \t title \t abstract
+Though the abstract for any given citation may be empty. The id may be anything you'd like to use to identify your citations, though it must be unique for each (i.e., no two rows may have the same id. Additional fields that may be optionally uploaded are:
+
+keywords \t authors \t journal
+Finally, you may also import XML files exported from the Reference Manager (Versions 11 and 12 are supported) citation software."       
+
+#### [Covidence](https://www.covidence.org/home)         
+"We currently support three main formats for imported references:      
+
+EndNote XML
+PubMed XML
+RIS text format
+If using the RIS format, we support imports with files exported from the following reference managers:
+
+Cochrane Registry of Studies
+EndNote
+Zotero
+Mendeley
+RefWorks"      
+
+#### [DistillerSR](https://www.evidencepartners.com/products/distillersr-systematic-review-software/)     
+?? Hard to tell     
+
+#### [EPPI-Reviewer](https://eppi.ioe.ac.uk/CMS/Default.aspx?alias=eppi.ioe.ac.uk/cms/er4&)      
+"If you click on the ‘Import references’ icon that you can find on the Documents tab you can import your search results using the available import filters. If you cannot find a filter for you file you should run your file through the RIS EXPORT utility that you can find on the ‘EPPI-Reviewer 4 gateway’ (http://eppi.ioe.ac.uk/cms/er4).  This utility has access to hundreds of import filters and will convert your file into an RIS formatted text file that you can import directly into EPPI-Reviewer 4 using the RIS filter."     
+
+#### [Rayyan](https://rayyan.qcri.org/welcome)    
+"Upload references in one of these text formats:
+
+EndNote Export (download example.enw)
+Refman/RIS (download example.ris)
+BibTeX (download example.bib)
+CSV (download example.csv)
+PubMed XML (download example.xml)
+Web of Science/CIW (download example.ciw)"    
+
+Important! The formats are quite specific (and have to follow the examples)       
