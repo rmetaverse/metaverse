@@ -1,42 +1,14 @@
-#' @import bibliometrix
-#' @import devtools
-#' @import dplyr
-#' @import ggrepel
-#' @import litsearchr
-#' @import metafor
-#' @import metadat
-#' @import revtools
-#' @import yaml
-#' @import stringr
-#' @import rlang
-#' @import mbmisc
-#' @import broom
-#'
-NULL
+.onAttach <- function(...) {
+  needed <- core[!is_attached(core)]
+  if (length(needed) == 0)
+    return()
 
-#' @export
-revtools::screen_titles
+  crayon::num_colors(TRUE)
+  metaverse_attach()
 
-#' @export
-revtools::screen_abstracts
 
-#' @export
-revtools::screen_topics
+}
 
-#' @export
-revtools::screen_duplicates
-
-#' @export
-metafor::rma
-
-#' @export
-metafor::escalc
-
-#' @export
-broom::tidy
-
-#' @export
-broom::augment
-
-#' @export
-broom::glance
+is_attached <- function(x) {
+  paste0("package:", x) %in% search()
+}
