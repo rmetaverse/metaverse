@@ -60,6 +60,7 @@ Description: Early-stage package for importing a subset of Evidence Synthesis (E
 Depends: R (>= 3.5.0)
 Imports:
     bibliometrix,
+    devtools,
     dplyr,
     stringr,
     ggrepel,
@@ -69,21 +70,24 @@ Imports:
     rcrossref,
     weightr,
     rlang,
-    yaml,
     litsearchr,
-    broom,
-    mbmisc
+    mbmisc,
+    revtools,
+    metadat,
+    yaml
 License: GPL-3
 BugReports: https://github.com/metaverse/metaverse
 LazyData: true
 RoxygenNote: 6.1.1.9000
-Remotes: 
+DevPackage: 
     elizagrames/litsearchr,
     malcolmbarrett/mbmisc,
     mjwestgate/revtools,
-    tidymodels/broom
+    wviechtb/metadat
 URL: https://github.com/rmetaverse/metaverse
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Remotes:  
+    elizagrames/litsearchr

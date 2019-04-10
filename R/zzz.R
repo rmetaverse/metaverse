@@ -1,8 +1,10 @@
 #' @import bibliometrix
+#' @import devtools
 #' @import dplyr
 #' @import ggrepel
 #' @import litsearchr
 #' @import metafor
+#' @import metadat
 #' @import revtools
 #' @import yaml
 #' @import stringr
