@@ -100,7 +100,7 @@
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; ✔ robvis     0.0.0.9000     ✔ revtools   0.3.0     </span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; ✔ metafor    2.1.0          ✔ metadat    0.1.0     </span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; ✔ tidymeta   0.1.0.9000     ✔ broom      0.5.2.9001</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; ✔ litsearchr 0.1.0</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; ✔ litsearchr 0.1.0          ✔ pubBias    0.0.1</span></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(mbmisc)</a></code></pre></div>
 <p>Model objects can be challenging to work with in their raw form in R. The <a href="https://broom.tidyverse.org/"><code>broom::</code></a> package provides tools to extract commonly desired model output in <strong>table</strong> form:</p>
 <blockquote>
@@ -613,18 +613,21 @@
 <div id="forest-plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#forest-plot" class="anchor"></a>Forest Plot</h2>
-<p><code>tidymeta::</code> also has some handy ggplot based graphics for meta-analysis</p>
+<p><code>tidymeta::</code> also has some handy ggplot based graphics for meta-analysis. Graph elements can be added using <code>ggplot2</code> geoms.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">fp &lt;-<span class="st"> </span>ma <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">forest_plot</span>(<span class="dt">group =</span> alloc)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">fp</a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">forest_plot</span>(<span class="dt">group =</span> alloc) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Effect sizes"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">title =</span> <span class="st">"Forest plot of effect size by allocation type"</span>)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">fp</a></code></pre></div>
 <p><img src="extractMeta_WKH_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div id="publication-bias" class="section level2">
 <h2 class="hasAnchor">
 <a href="#publication-bias" class="anchor"></a>Publication Bias</h2>
 <p>Estimates the Vevea and Hedges (1995) weight-function model using the <code>pubBias::</code> package.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">pubBias<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pubBias/topics/weightrMeta">weightrMeta</a></span>(ma)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">weightrMeta</span>(ma)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; Unadjusted Model (k = 17):</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; </span></a>
@@ -673,7 +676,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Martin Westgate, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Malcolm Barrett, Michael Schermann.</p>
+  <p>Developed by Martin Westgate, Malcolm Barrett, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Malcolm Barrett, Michael Schermann.</p>
 </div>
 
 <div class="pkgdown">

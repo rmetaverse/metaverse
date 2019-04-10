@@ -96,11 +96,14 @@ ma
 ```
 ## Forest Plot
 
-`tidymeta::` also has some handy ggplot based graphics for meta-analysis
+`tidymeta::` also has some handy ggplot based graphics for meta-analysis. Graph elements can be added using `ggplot2` geoms.
 
 ```{r warning=FALSE}
 fp <- ma %>% 
-  forest_plot(group = alloc)
+  forest_plot(group = alloc) +
+  ggplot2::geom_vline(xintercept = 0, linetype = "dashed") +
+  ggplot2::xlab("Effect sizes") +
+  ggplot2::labs(title = "Forest plot of effect size by allocation type")
 
 fp
 ```
@@ -109,7 +112,7 @@ fp
 Estimates the Vevea and Hedges (1995) weight-function model using the `pubBias::` package.
 
 ```{r warning=FALSE}
-pubBias::weightrMeta(ma)
+weightrMeta(ma)
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
