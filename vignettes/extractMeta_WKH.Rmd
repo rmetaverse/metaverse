@@ -19,12 +19,7 @@ knitr::opts_chunk$set(
 
 ```{r }
 library(metaverse)
-library(broom)
-library(tidymeta)
 library(mbmisc)
-library(ggplot2)
-library(dplyr)
-library(broom)
 ```
 
 
@@ -89,7 +84,7 @@ ma <- ma_model_wkh %>%
     ci = cpos,
     di = cneg,
     data = .) %>%
-  group_by(alloc) %>% 
+  dplyr::group_by(alloc) %>% 
   meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE)
 
 ma
