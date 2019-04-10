@@ -1,6 +1,5 @@
 ---
 title: "Snowballing"
-date: "4/8/2019"
 output: html_document
 ---
 
@@ -8,12 +7,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-![Figure 1 from Wholin 2014](../images/snowballing.png)
-
 ## Backward Snowballing   
 ### finding past papers      
 - Start with one (or a few) articles that are relevant to your topic. Let's call this **F0**.        
-- Take all the papers from the reference list of F0 - let's call these F-1         
+- Take all the papers from the reference list of F0 - let's call these F-1       
 - Take all the papers from the reference list of F-1 articles, and so on     
 
 ## Forward Snowballing  
@@ -42,4 +39,37 @@ Using 20 review articles that contained 949 citations to journal or conference a
 *Results*     
 The automatic method was able to correctly identify 633 (as proportion of included citations: recall=66.7%, F1 score=79.3%; as proportion of citations in MAS: recall=85.5%, F1 score=91.2%) of citations with high precision (97.7%), and retrieved the full text or abstract for 490 (recall=82.9%, precision=92.1%, F1 score=87.3%) of the 633 correctly retrieved citations.     
 *Conclusions*     
-The proposed method for automatic citation snowballing is accurate and is capable of obtaining the full texts or abstracts for a substantial proportion of the scholarly citations in review articles. By automating the process of citation snowballing, it may be possible to reduce the time and effort of common evidence surveillance tasks such as keeping trial registries up to date and conducting systematic reviews.#        
+The proposed method for automatic citation snowballing is accurate and is capable of obtaining the full texts or abstracts for a substantial proportion of the scholarly citations in review articles. By automating the process of citation snowballing, it may be possible to reduce the time and effort of common evidence surveillance tasks such as keeping trial registries up to date and conducting systematic reviews."
+
+# Instructions for snowballing searches of different databases     
+Alison Bethel says that her colleague is writing a paper (or has written one?) where they compare Scous and WoS. Scopus performed a bit better. But the best practice is to search multiple databases.     
+Start with list of papers (your core set)     
+
+Convert the titles of the papers to a search string    
+
+## Scopus     
+#### Advanced Search     
+E.g. TITLE-ABS-KEY("Effectiveness and efficiency of search methods in systematic reviews of complex evidence" OR "Guidelines for snowballing in systematic literature studies and a replication in software engineering" OR "Automatic Evidence Retrieval for Systematic Reviews")
+
+Select 'All'
+
+#### Forward Search      
+Select 'View references'         
+
+#### Backward Search       
+Select 'View cited by'   
+
+## Web of Science      
+#### Forward Search      
+#### Cited Reference Search       
+##### Cited Title 
+"Effectiveness and efficiency of search methods in systematic reviews of complex evidence" OR "Guidelines for snowballing in systematic literature studies and a replication in software engineering" OR "Automatic Evidence Retrieval for Systematic Reviews"
+
+Have to manually select the papers that you want, then press "Finish Search"         
+
+#### Backward Search       
+Very tedious!     
+
+Advanced Search: TS=("Effectiveness and efficiency of search methods in systematic reviews of complex evidence" OR "Guidelines for snowballing in systematic literature studies and a replication in software engineering" OR "Automatic Evidence Retrieval for Systematic Reviews")    
+
+Have to click "Times Cited" next to each article    

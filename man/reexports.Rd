@@ -9,6 +9,9 @@
 \alias{screen_duplicates}
 \alias{rma}
 \alias{escalc}
+\alias{tidy}
+\alias{augment}
+\alias{glance}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,6 +19,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{broom}{\code{\link[broom]{tidy}}, \code{\link[broom]{augment}}, \code{\link[broom]{glance}}}
+
   \item{metafor}{\code{\link[metafor]{rma}}, \code{\link[metafor]{escalc}}}
 
   \item{revtools}{\code{\link[revtools]{screen_titles}}, \code{\link[revtools]{screen_abstracts}}, \code{\link[revtools]{screen_topics}}, \code{\link[revtools]{screen_duplicates}}}
