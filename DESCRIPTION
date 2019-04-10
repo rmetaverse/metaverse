@@ -57,3 +57,20 @@ Authors@R: c(
     email = "mschermann@scu.edu",
     comment = c(ORCID = "0000-0003-1210-0554")))
 Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
+Imports: 
+    robvis (>= 0.0.0.9000),
+    metafor,
+    litsearchr (>= 0.1.0),
+    revtools,
+    metadat (>= 0.1.0),
+    broom (>= 0.5.2.9001),
+    tidymeta (>= 0.1.0.9000)
+Remotes:  
+    mcguinlu/robvis,
+    elizagrames/litsearchr,
+    tidymodels/broom,
+    malcolmbarrett/tidymeta
+URL: https://github.com/rmetaverse/metaverse
+BugReports: https://github.com/rmetaverse/metaverse/issues
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
