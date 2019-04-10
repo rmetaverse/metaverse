@@ -1,6 +1,6 @@
 ---
 title: "Introduction to robvis, a visualisation tool for risk-of-bias assessments"
-author: "Luke A McGuinness"
+author: ""
 date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Introduction to robvis}
@@ -23,7 +23,7 @@ Users can currently produce summary plots for three commonly used tools: ROB2.0,
 
 ### Common structure of risk-of-bias assessment output (usually in Excel)
 ```{r headrob}
-head(data_rob)
+knitr::kable(data_rob)
 ```
 
 
