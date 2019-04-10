@@ -11,6 +11,7 @@
 #' @import rlang
 #' @import mbmisc
 #' @import broom
+#' @import pubBias
 #'
 NULL
 
