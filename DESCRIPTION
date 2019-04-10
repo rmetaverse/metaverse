@@ -69,7 +69,8 @@ Remotes:
     mcguinlu/robvis,
     elizagrames/litsearchr,
     tidymodels/broom,
-    malcolmbarrett/tidymeta
+    malcolmbarrett/tidymeta,
+    wviechtb/metadat
 URL: https://github.com/rmetaverse/metaverse
 BugReports: https://github.com/rmetaverse/metaverse/issues
 VignetteBuilder: knitr
