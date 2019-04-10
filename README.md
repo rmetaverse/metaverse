@@ -1,7 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# metaverse <img src="metaverse.png" align="right" width="20%" height="20%" />
+metaverse
+<img src="man/metaverse.png" align="right" width="20%" height="20%" />
 
 Evidence synthesis (ES) is the process of identifying, collating and
 synthesising primary scientific research (such as articles and reports)
@@ -21,7 +22,14 @@ You can install the the development version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rmetaverse/metaverse")
+# install.packages("remotes")
+devtools::install_github("rmetaverse/metaverse", dependencies = TRUE)
+```
+
+On Linux, you may need to
+
+``` bash
+sudo apt install libudunits2-dev
 ```
 
 ## Example

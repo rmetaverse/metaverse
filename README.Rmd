@@ -8,13 +8,12 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  fig.path = "",
   out.width = "100%"
 )
 ```
 
-metaverse <img src="metaverse.png" align="right" width="20%" height="20%" />
-==================
+metaverse <img src="man/metaverse.png" align="right" width="20%" height="20%" />
 
 Evidence synthesis (ES) is the process of identifying, collating and synthesising primary scientific research (such as articles and reports) for the purposes of providing reliable, transparent summaries.
 
