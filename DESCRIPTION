@@ -9,6 +9,13 @@ Authors@R: c(
     email = "martinjwestgate@gmail.com",
     comment = c(ORCID = "0000-0003-0854-2034")),
   person(
+    given = "Malcolm",
+    family = "Barrett",
+    role = c("aut"),
+    email = "malcolmbarrett@gmail.com",
+    comment = c(ORCID = "0000-0003-0299-5825")
+  ),  
+  person(
     given = "Eliza",
     family = "Grames",
     role = c("aut"),
@@ -71,7 +78,7 @@ Imports:
     metadat (>= 0.1.0),
     broom (>= 0.5.2.9001),
     tidymeta (>= 0.1.0.9000)
-Remotes:  
+Remotes: 
     mcguinlu/robvis,
     elizagrames/litsearchr,
     tidymodels/broom,
