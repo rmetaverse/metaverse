@@ -79,3 +79,7 @@ Remotes: elizagrames/litsearchr,
          mjwestgate/revtools,
          wviechtb/metadat
 URL: https://github.com/rmetaverse/metaverse
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
