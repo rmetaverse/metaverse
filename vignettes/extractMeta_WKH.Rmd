@@ -1,6 +1,6 @@
 ---
-title: "extracting common information from meta-analysis model output"
-author: "Charles T. Gray and Malcolm Barrett"
+title: "Meta-Analysis Workflow"
+author: "Charles T. Gray, Malcolm Barrett, W. Kyle Hamilton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -19,6 +19,12 @@ knitr::opts_chunk$set(
 
 ```{r }
 library(metaverse)
+library(broom)
+library(tidymeta)
+library(mbmisc)
+library(ggplot2)
+library(dplyr)
+library(broom)
 ```
 
 
@@ -69,9 +75,30 @@ ma_model %>% glance()
 ma_model %>% augment()
 ```
 
+# Analysis
 
-## requesting more features
+```{r}
+ma_model_wkh <- metafor::dat.bcg
 
-Currently, this is restricted to `metafor::rma` model objects, but Malcolm and Charles are most happy to collaborate on expanding the functionality to other meta-analytic objects. 
 
-The easiest way to let us know is to log an [issue](https://github.com/rmetaverse/metaverse/issues) on the `metaverse::` GitHub repository.   
+ma <- ma_model_wkh %>% 
+  escalc(
+    measure = "RR",
+    ai = tpos,
+    bi = tneg,
+    ci = cpos,
+    di = cneg,
+    data = ma_model_wkh) %>%
+  group_by(alloc) %>% 
+  meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE)
+
+ma
+
+```
+
+```{r warning=FALSE}
+fp <- ma %>% 
+  forest_plot(group = alloc)
+
+fp
+```

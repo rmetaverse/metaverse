@@ -70,35 +70,20 @@ Imports:
     rcrossref,
     weightr,
     rlang,
-<<<<<<< HEAD
     litsearchr,
     mbmisc,
     revtools,
     metadat,
     yaml
-=======
-    yaml,
-    litsearchr,
-    broom,
-    mbmisc
->>>>>>> d1463d125694fee6a5b42c992f4c48248a7a04a1
 License: GPL-3
 BugReports: https://github.com/metaverse/metaverse
 LazyData: true
 RoxygenNote: 6.1.1.9000
-<<<<<<< HEAD
 DevPackage: 
     elizagrames/litsearchr,
     malcolmbarrett/mbmisc,
     mjwestgate/revtools,
     wviechtb/metadat
-=======
-Remotes: 
-    elizagrames/litsearchr,
-    malcolmbarrett/mbmisc,
-    mjwestgate/revtools,
-    tidymodels/broom
->>>>>>> d1463d125694fee6a5b42c992f4c48248a7a04a1
 URL: https://github.com/rmetaverse/metaverse
 Suggests: 
     knitr,
