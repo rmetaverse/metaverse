@@ -84,7 +84,7 @@ Remotes:
     malcolmbarrett/tidymeta,
     wviechtb/metadat,
     malcolmbarrett/mbmisc,
-    rmetaverse/pubBias
+    rmetaverse/pub_bias
 Suggests: 
     testthat
 License: GPL-3
