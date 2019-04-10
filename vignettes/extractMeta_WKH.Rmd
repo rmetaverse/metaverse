@@ -18,11 +18,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r }
-# library(metaverse)
-library(tidyverse)
-library(metafor)
-library(metabroom)
-# library(metaverse)
+library(metaverse)
 ```
 
 
@@ -47,7 +43,7 @@ ma_model <-
     bi = tneg,
     ci = cpos,
     di = cneg,
-    data = metafor::dat.bcg
+    data = dat.bcg
   ) %>% rma(yi, vi, data = ., method = "EB")
 
 ```

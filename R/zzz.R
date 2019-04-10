@@ -6,7 +6,6 @@
 #' @import metafor
 #' @import revtools
 #' @import yaml
-#' @import weightr
 #' @import stringr
 #' @import rlang
 #' @import broom
