@@ -26,8 +26,17 @@ You can install the the development version from [GitHub](https://github.com/) w
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rmetaverse/metaverse")
+# install.packages("remotes")
+devtools::install_github("rmetaverse/metaverse", dependencies = TRUE)
 ```
+
+On Linux, you may need to 
+
+```bash
+sudo apt install libudunits2-dev
+```
+
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
