@@ -1,8 +1,30 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
-sudo: false
+language: r
+sudo: required
 cache: packages
 
-r_packages:
-  - gsl
+apt_packages:
+    - libgsl0-dev  
+    - libgsl0ldbl 
+r_binary_packages:
+    - Rcpp
+    - RcppGSL
+    - RcppEigen
+    - metafor
+    - ggplot2
+    - stringi
+    - stringr
+    - magrittr
+    - rlang
+    - revtools
+    - curl
+    - fs
+    - git2r
+    - withr
+    - igraph
+    
+r_build_args: --no-build-vignettes --no-manual 
+r_check_args: --no-build-vignettes --no-manual 
+
+warnings_are_errors : false
