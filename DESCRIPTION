@@ -84,7 +84,7 @@ Remotes:
     malcolmbarrett/tidymeta,
     wviechtb/metadat,
     malcolmbarrett/mbmisc,
-    rmetaverse/pub_bias
+    rmetaverse/pubBias
 Suggests: 
     testthat,
     knitr
@@ -98,6 +98,6 @@ DevPackage:
     mjwestgate/revtools,
     wviechtb/metadat,
     tidymodels/broom,
-    rmetaverse/pub_bias
+    rmetaverse/pubBias
 URL: https://github.com/rmetaverse/metaverse
 VignetteBuilder: knitr
