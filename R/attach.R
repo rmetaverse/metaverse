@@ -1,4 +1,4 @@
-core <- c("robvis", "metafor", "tidymeta", "litsearchr", "revtools", "metadat", "broom", "pub_bias")
+core <- c("robvis", "metafor", "tidymeta", "litsearchr", "revtools", "metadat", "broom", "pubBias")
 
 
 core_loaded <- function() {
