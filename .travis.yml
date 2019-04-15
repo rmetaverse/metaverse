@@ -1,8 +1,17 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: false
+sudo: required
 cache: packages
 
+addons:
+  apt:
+    packages:
+      - libgsl0-dev # for topicmodels
+      - libxml2-dev # for XML, a dependency of quanteda
+      - gsl-devel #GSL
+
 r_packages:
+  - Rcpp
+  - RcppGSL
   - gsl
