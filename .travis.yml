@@ -9,3 +9,5 @@ apt_packages:
 r_binary_packages:
     - Rcpp
     - RcppGSL
+ 
+r_github_packages: rmetaverse/pubBias
