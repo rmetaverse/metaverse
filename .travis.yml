@@ -10,3 +10,5 @@ apt_packages:
 r_packages:
     - Rcpp
     - RcppGSL
+r_build_args: "--no-build-vignettes"
+r_check_args: "--no-build-vignettes"
