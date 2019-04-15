@@ -2,3 +2,6 @@
 
 language: r
 
+r_binary_packages:
+    - Rcpp
+    - RcppGSL
