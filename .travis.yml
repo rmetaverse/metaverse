@@ -9,9 +9,4 @@ addons:
     packages:
       - libgsl0-dev # for topicmodels
       - libxml2-dev # for XML, a dependency of quanteda
-      - gsl-devel #GSL
-
-r_packages:
-  - Rcpp
-  - RcppGSL
-  - gsl
+      - gsl-bin
