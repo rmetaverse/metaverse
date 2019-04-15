@@ -86,7 +86,8 @@ Remotes:
     malcolmbarrett/mbmisc,
     rmetaverse/pub_bias
 Suggests: 
-    testthat
+    testthat,
+    knitr
 License: GPL-3
 BugReports: https://github.com/rmetaverse/metaverse
 LazyData: true
