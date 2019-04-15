@@ -10,4 +10,12 @@ r_binary_packages:
     - Rcpp
     - RcppGSL
  
-r_github_packages: rmetaverse/pubBias
+r_github_packages: 
+    - rmetaverse/pubBias
+    - mcguinlu/robvis
+    - elizagrames/litsearchr
+    - tidymodels/broom
+    - malcolmbarrett/tidymeta
+    - wviechtb/metadat
+    - malcolmbarrett/mbmisc
+    - rmetaverse/pubBias
