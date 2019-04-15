@@ -5,8 +5,8 @@ sudo: required
 cache: packages
 
 apt_packages:
-    - libgsl0-dev  
-    - libgsl0ldbl 
+    - libgsl0-dev
+    - libgsl0ldbl
 r_binary_packages:
     - Rcpp
     - RcppGSL
@@ -23,8 +23,9 @@ r_binary_packages:
     - git2r
     - withr
     - igraph
-    
-r_build_args: --no-build-vignettes --no-manual 
-r_check_args: --no-build-vignettes --no-manual 
+    - knitr
+
+r_build_args: --no-build-vignettes --no-manual
+r_check_args: --no-build-vignettes --no-manual
 
 warnings_are_errors : false
