@@ -1,12 +1,12 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
 sudo: required
 cache: packages
 
-addons:
-  apt:
-    packages:
-      - libgsl0-dev # for topicmodels
-      - libxml2-dev # for XML, a dependency of quanteda
-      - gsl-bin
+apt_packages:
+    - libgsl0-dev  
+    - libgsl0ldbl 
+r_packages:
+    - Rcpp
+    - RcppGSL
