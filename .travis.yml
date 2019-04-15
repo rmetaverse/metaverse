@@ -24,7 +24,8 @@ r_binary_packages:
     - withr
     - igraph
     - knitr
-
+    - weightr
+r_github_packages: rmetaverse/pubBias
 r_build_args: --no-build-vignettes --no-manual
 r_check_args: --no-build-vignettes --no-manual
 
