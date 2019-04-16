@@ -5,20 +5,15 @@ language: r
 apt_packages:
     - libgsl0-dev
     - libgsl0ldbl
+    - libxml2-dev
     
 r_binary_packages:
     - Rcpp
     - RcppGSL
- 
-r_github_packages: 
-    - rmetaverse/pubBias
-    - mcguinlu/robvis
-    - elizagrames/litsearchr
-    - tidymodels/broom
-    - malcolmbarrett/tidymeta
-    - wviechtb/metadat
-    - malcolmbarrett/mbmisc
-    - rmetaverse/pubBias
+    - roxygen2
+    - tidyverse
+    - devtools
+
 
 r_build_args: --no-build-vignettes --no-manual
 r_check_args: --no-build-vignettes --no-manual
