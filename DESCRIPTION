@@ -76,7 +76,11 @@ Imports:
     revtools,
     metadat (>= 0.1.0),
     broom (>= 0.5.2.9001),
-    tidymeta (>= 0.1.0.9000)
+    tidymeta (>= 0.1.0.9000),
+    pubBias,
+    crayon,
+    cli,
+    rstudioapi
 Remotes: 
     mcguinlu/robvis,
     elizagrames/litsearchr,
@@ -84,10 +88,12 @@ Remotes:
     malcolmbarrett/tidymeta,
     wviechtb/metadat,
     malcolmbarrett/mbmisc,
-    rmetaverse/pubBias
+    kylehamilton/pubBias
 Suggests: 
     testthat,
-    knitr
+    knitr,
+    rmarkdown,
+    weightr
 License: GPL-3
 BugReports: https://github.com/rmetaverse/metaverse
 LazyData: true
@@ -98,6 +104,6 @@ DevPackage:
     mjwestgate/revtools,
     wviechtb/metadat,
     tidymodels/broom,
-    rmetaverse/pubBias
+    kylehamilton/pubBias
 URL: https://github.com/rmetaverse/metaverse
 VignetteBuilder: knitr
