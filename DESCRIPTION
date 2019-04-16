@@ -88,7 +88,8 @@ Remotes:
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    weightr
 License: GPL-3
 BugReports: https://github.com/rmetaverse/metaverse
 LazyData: true
@@ -99,6 +100,6 @@ DevPackage:
     mjwestgate/revtools,
     wviechtb/metadat,
     tidymodels/broom,
-    rmetaverse/pubBias
+    kylehamilton/pubBias
 URL: https://github.com/rmetaverse/metaverse
 VignetteBuilder: knitr
