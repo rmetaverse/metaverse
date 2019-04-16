@@ -1,8 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-metaverse <img src="man/metaverse.png" align="right" width="20%" height="20%" />
+metaverse <img src="man/figures/metaverse_hex.png" align="right" width="18%" height="18%" />
+============================================================================================
 
-[![Travis Build Status](https://travis-ci.com/rmetaverse/metaverse.svg?branch=master)](https://travis-ci.com/rmetaverse/metaverse/)
+[![Travis Build Status](https://travis-ci.com/rmetaverse/metaverse.svg?branch=master)](https://travis-ci.com/rmetaverse/metaverse/) [![codecov](https://codecov.io/gh/rmetaverse/metaverse/branch/master/graph/badge.svg)](https://codecov.io/gh/rmetaverse/metaverse)
 
 Evidence synthesis (ES) is the process of identifying, collating and synthesising primary scientific research (such as articles and reports) for the purposes of providing reliable, transparent summaries.
 
@@ -23,13 +24,4 @@ On Linux, you may need to
 
 ``` bash
 sudo apt install libudunits2-dev
-```
-
-Example
--------
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-## basic example code
 ```

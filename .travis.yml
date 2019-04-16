@@ -6,7 +6,7 @@ apt_packages:
     - libgsl0-dev
     - libgsl0ldbl
     - libxml2-dev
-    
+
 r_binary_packages:
     - Rcpp
     - RcppGSL
@@ -14,9 +14,13 @@ r_binary_packages:
     - tidyverse
     - devtools
     - stringi
+    - covr
 
 
 r_build_args: --no-build-vignettes --no-manual
 r_check_args: --no-build-vignettes --no-manual
 
 warnings_are_errors : false
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
