@@ -76,7 +76,11 @@ Imports:
     revtools,
     metadat (>= 0.1.0),
     broom (>= 0.5.2.9001),
-    tidymeta (>= 0.1.0.9000)
+    tidymeta (>= 0.1.0.9000),
+    pubBias,
+    crayon,
+    cli,
+    rstudioapi
 Remotes: 
     mcguinlu/robvis,
     elizagrames/litsearchr,
@@ -84,7 +88,7 @@ Remotes:
     malcolmbarrett/tidymeta,
     wviechtb/metadat,
     malcolmbarrett/mbmisc,
-    rmetaverse/pubBias
+    kylehamilton/pubBias
 Suggests: 
     testthat,
     knitr,
