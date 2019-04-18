@@ -87,24 +87,23 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<p>metaverse <img src="man/metaverse.png" align="right" width="20%" height="20%"></p>
+<div id="metaverse" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#metaverse" class="anchor"></a>metaverse <img src="reference/figures/metaverse_hex.png" align="right" width="18%" height="18%">
+</h1></div>
+
 <p>Evidence synthesis (ES) is the process of identifying, collating and synthesising primary scientific research (such as articles and reports) for the purposes of providing reliable, transparent summaries.</p>
 <p>The goal of this project is to collect, integrate and expand the universe of available functions for ES projects in R, via our proposed metaverse package. Like tidyverse, metaverse is envisioned as a collector package that makes it straightforward to install a set of functions – currently located in separate packages – for a common purpose.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># install.packages("remotes")</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"rmetaverse/metaverse"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
+<span class="co"># install.packages("remotes")</span>
+devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"rmetaverse/metaverse"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>On Linux, you may need to</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">sudo</span> apt install libudunits2-dev</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> apt install libudunits2-dev</code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">## basic example code</a></code></pre></div>
 </div>
   </div>
 
@@ -114,7 +113,7 @@
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/rmetaverse/metaverse">https://​github.com/​rmetaverse/​metaverse</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/metaverse/metaverse">https://​github.com/​metaverse/​metaverse</a>
+<li>Report a bug at <br><a href="https://github.com/rmetaverse/metaverse">https://​github.com/​rmetaverse/​metaverse</a>
 </li>
 </ul>
 </div>
@@ -136,18 +135,24 @@
 <li>Luke McGuinness <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8730-9761" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Rose O'Dea <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8177-5075" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Alfredo Sanchez-Tojar <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2886-0649" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>Malcolm Barrett <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0299-5825" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Michael Schermann <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1210-0554" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 </ul>
 </div>
 
-      </div>
+      <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.com/rmetaverse/metaverse/"><img src="https://travis-ci.com/rmetaverse/metaverse.svg?branch=master" alt="Travis Build Status"></a></li>
+<li><a href="https://codecov.io/gh/rmetaverse/metaverse"><img src="https://codecov.io/gh/rmetaverse/metaverse/branch/master/graph/badge.svg" alt="codecov"></a></li>
+</ul>
+</div>
+</div>
 
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Martin Westgate, Malcolm Barrett, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Malcolm Barrett, Michael Schermann.</p>
+  <p>Developed by Martin Westgate, Malcolm Barrett, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Michael Schermann.</p>
 </div>
 
 <div class="pkgdown">

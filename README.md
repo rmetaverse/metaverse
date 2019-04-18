@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-metaverse <img src="man/figures/metaverse_hex.png" align="right" width="18%" height="18%" />
-============================================================================================
+metaverse <img src="docs/reference/figures/metaverse_hex.png" align="right" width="18%" height="18%" />
+=======================================================================================================
 
 [![Travis Build Status](https://travis-ci.com/rmetaverse/metaverse.svg?branch=master)](https://travis-ci.com/rmetaverse/metaverse/) [![codecov](https://codecov.io/gh/rmetaverse/metaverse/branch/master/graph/badge.svg)](https://codecov.io/gh/rmetaverse/metaverse)
 
