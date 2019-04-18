@@ -25,3 +25,5 @@ warnings_are_errors : false
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
+  
+r_github_packages: r-lib/remotes#340
