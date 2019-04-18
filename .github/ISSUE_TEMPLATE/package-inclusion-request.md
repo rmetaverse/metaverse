@@ -1,5 +1,5 @@
 ---
-name: Package includion request
+name: Package inclusion request
 about: Suggest an R package to be included
 title: ''
 labels: enhancement
