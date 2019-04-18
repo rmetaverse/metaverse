@@ -86,7 +86,7 @@
       <h1>Systematic review for a meta-analysis of the effects of prescribed burning on abundance of red-cockaded woodpeckers (Picoides borealis)</h1>
                         <h4 class="author">Eliza M. Grames, Rose O’Dea, Alfredo Sanchez-Tojar, and Michael Schermann</h4>
             
-            <h4 class="date">2019-04-10</h4>
+            <h4 class="date">2019-04-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmetaverse/metaverse/blob/master/vignettes/search_and_screening.Rmd"><code>vignettes/search_and_screening.Rmd</code></a></small>
       <div class="hidden name"><code>search_and_screening.Rmd</code></div>
@@ -98,91 +98,91 @@
 <div id="write-and-conduct-naive-search" class="section level1">
 <h1 class="hasAnchor">
 <a href="#write-and-conduct-naive-search" class="anchor"></a>Write and conduct naive search</h1>
-<p>Naive search: TS=((“picoides borealis” OR “red-cockaded woodpecker<em>" OR "red cockaded woodpecker" OR "leuconotopicus borealis" OR woodpecker) AND ("prescribed burn</em>” OR "prescribed fire<em>" OR fire</em> OR wildfire* OR burn<em>) AND (abundan</em> OR presen* OR occup* OR occur* OR (popul* NEAR/2 (densit* OR size))))</p>
+<p>Naive search: TS=((“picoides borealis” OR “red-cockaded woodpecker*" OR “red cockaded woodpecker” OR “leuconotopicus borealis” OR woodpecker) AND (“prescribed burn*" OR “prescribed fire<em>" OR fire</em> OR wildfire* OR burn<em>) AND (abundan</em> OR presen* OR occup* OR occur* OR (popul* NEAR/2 (densit* OR size))))</p>
 <p>Searches were conducted on April 10, 2019 with no date restrictions. We searched Scopus (1970-2019) and five databases in Web of Science: the Web of Science Core Collection (1900-2019), BIOSIS Previews (1926-2019), Current Contents Connect (1998-2019), MEDLINE (1950-2019), and Zoological Record (1945-2019).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">search_directory &lt;-<span class="st"> "~/litsearchr/inst/extdata/borealis/"</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">naiveimport &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/import_results">import_results</a></span>(<span class="dt">directory =</span> search_directory, <span class="dt">remove_duplicates =</span> <span class="ot">FALSE</span>, <span class="dt">clean_dataset =</span> <span class="ot">TRUE</span>, <span class="dt">save_full_dataset =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">dedupe_stage1 &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/deduplicate">deduplicate</a></span>(naiveimport, <span class="dt">use_abstracts =</span> <span class="ot">FALSE</span>, <span class="dt">use_titles =</span> <span class="ot">TRUE</span>, <span class="dt">method =</span> <span class="st">"quick"</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">dedupe_stage2 &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/deduplicate">deduplicate</a></span>(dedupe_stage1, <span class="dt">use_abstracts =</span> <span class="ot">TRUE</span>, <span class="dt">use_titles =</span> <span class="ot">FALSE</span>, <span class="dt">doc_sim =</span> <span class="fl">.8</span>, <span class="dt">method =</span> <span class="st">"tokens"</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">naiveresults &lt;-<span class="st"> </span>dedupe_stage2</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_directory &lt;-<span class="st"> "~/litsearchr/inst/extdata/borealis/"</span>
+
+naiveimport &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/import_results">import_results</a></span>(<span class="dt">directory =</span> search_directory, <span class="dt">remove_duplicates =</span> <span class="ot">FALSE</span>, <span class="dt">clean_dataset =</span> <span class="ot">TRUE</span>, <span class="dt">save_full_dataset =</span> <span class="ot">FALSE</span>)
+
+dedupe_stage1 &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/deduplicate">deduplicate</a></span>(naiveimport, <span class="dt">use_abstracts =</span> <span class="ot">FALSE</span>, <span class="dt">use_titles =</span> <span class="ot">TRUE</span>, <span class="dt">method =</span> <span class="st">"quick"</span>)
+dedupe_stage2 &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/deduplicate">deduplicate</a></span>(dedupe_stage1, <span class="dt">use_abstracts =</span> <span class="ot">TRUE</span>, <span class="dt">use_titles =</span> <span class="ot">FALSE</span>, <span class="dt">doc_sim =</span> .<span class="dv">8</span>, <span class="dt">method =</span> <span class="st">"tokens"</span>)
+
+naiveresults &lt;-<span class="st"> </span>dedupe_stage2</code></pre></div>
 <div id="identify-potential-keywords" class="section level2">
 <h2 class="hasAnchor">
 <a href="#identify-potential-keywords" class="anchor"></a>Identify potential keywords</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#rakedkeywords &lt;- litsearchr::extract_terms(naiveresults, type="RAKE", min_freq = 2, title = TRUE, abstract = TRUE, ngrams = TRUE, n=2)</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># Note: if you can't run rapidraker due to rJava issues, the output is stored in litsearchr::rakedkeywords</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">taggedkeywords &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/extract_terms">extract_terms</a></span>(naiveresults, <span class="dt">type=</span><span class="st">"tagged"</span>, <span class="dt">min_freq =</span> <span class="dv">2</span>, <span class="dt">title =</span> <span class="ot">TRUE</span>, <span class="dt">abstract =</span> <span class="ot">TRUE</span>, <span class="dt">ngrams =</span> <span class="ot">TRUE</span>, <span class="dt">n=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#rakedkeywords &lt;- litsearchr::extract_terms(naiveresults, type="RAKE", min_freq = 2, title = TRUE, abstract = TRUE, ngrams = TRUE, n=2)</span>
+
+<span class="co"># Note: if you can't run rapidraker due to rJava issues, the output is stored in litsearchr::rakedkeywords</span>
+
+taggedkeywords &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/extract_terms">extract_terms</a></span>(naiveresults, <span class="dt">type=</span><span class="st">"tagged"</span>, <span class="dt">min_freq =</span> <span class="dv">2</span>, <span class="dt">title =</span> <span class="ot">TRUE</span>, <span class="dt">abstract =</span> <span class="ot">TRUE</span>, <span class="dt">ngrams =</span> <span class="ot">TRUE</span>, <span class="dt">n=</span><span class="dv">2</span>)</code></pre></div>
 </div>
 <div id="build-the-keyword-co-occurrence-network" class="section level2">
 <h2 class="hasAnchor">
 <a href="#build-the-keyword-co-occurrence-network" class="anchor"></a>Build the keyword co-occurrence network</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">naivedictionary &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/make_dictionary">make_dictionary</a></span>(<span class="dt">terms=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(rakedkeywords, taggedkeywords))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">naivecorpus &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/make_corpus">make_corpus</a></span>(naiveresults)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">naivedfm &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/create_dfm">create_dfm</a></span>(naivecorpus, <span class="dt">my_dic=</span>naivedictionary)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">naivegraph &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/create_network">create_network</a></span>(naivedfm, <span class="dt">min_studies=</span><span class="dv">1</span>, <span class="dt">min_occurrences =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">naivedictionary &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/make_dictionary">make_dictionary</a></span>(<span class="dt">terms=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(rakedkeywords, taggedkeywords))
+naivecorpus &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/make_corpus">make_corpus</a></span>(naiveresults)
+naivedfm &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/create_dfm">create_dfm</a></span>(naivecorpus, <span class="dt">my_dic=</span>naivedictionary)
+naivegraph &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/create_network">create_network</a></span>(naivedfm, <span class="dt">min_studies=</span><span class="dv">1</span>, <span class="dt">min_occurrences =</span> <span class="dv">1</span>)</code></pre></div>
 </div>
 <div id="identify-change-points-in-keyword-importance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#identify-change-points-in-keyword-importance" class="anchor"></a>Identify change points in keyword importance</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/strength">strength</a></span>(BBWO_graph)), <span class="dt">ylab=</span><span class="st">"Node strength"</span>, <span class="dt">main=</span><span class="st">"Ranked node strengths"</span>, <span class="dt">xlab=</span><span class="st">"Rank"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">splinecutoff &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/find_cutoff">find_cutoff</a></span>(naivegraph, <span class="dt">method =</span> <span class="st">"spline"</span>, <span class="dt">degrees =</span> <span class="dv">2</span>, <span class="dt">knot_num =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">                                        <span class="dt">diagnostics =</span> <span class="ot">TRUE</span>, <span class="dt">importance_method =</span> <span class="st">"strength"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># note: if you don't want to wait for the freepsgen algorithm, </span></a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">reducedgraph &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/reduce_graph">reduce_graph</a></span>(naivegraph, <span class="dt">cutoff_strength =</span> splinecutoff[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">searchterms &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/get_keywords">get_keywords</a></span>(reducedgraph, <span class="dt">savekeywords =</span> <span class="ot">FALSE</span>, <span class="dt">makewordle =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/strength">strength</a></span>(BBWO_graph)), <span class="dt">ylab=</span><span class="st">"Node strength"</span>, <span class="dt">main=</span><span class="st">"Ranked node strengths"</span>, <span class="dt">xlab=</span><span class="st">"Rank"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">splinecutoff &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/find_cutoff">find_cutoff</a></span>(naivegraph, <span class="dt">method =</span> <span class="st">"spline"</span>, <span class="dt">degrees =</span> <span class="dv">2</span>, <span class="dt">knot_num =</span> <span class="dv">3</span>, 
+                                        <span class="dt">diagnostics =</span> <span class="ot">TRUE</span>, <span class="dt">importance_method =</span> <span class="st">"strength"</span>)
+<span class="co"># note: if you don't want to wait for the freepsgen algorithm, </span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reducedgraph &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/reduce_graph">reduce_graph</a></span>(naivegraph, <span class="dt">cutoff_strength =</span> splinecutoff[<span class="dv">1</span>])
+searchterms &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/get_keywords">get_keywords</a></span>(reducedgraph, <span class="dt">savekeywords =</span> <span class="ot">FALSE</span>, <span class="dt">makewordle =</span> <span class="ot">FALSE</span>)</code></pre></div>
 </div>
 <div id="group-terms-into-concepts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#group-terms-into-concepts" class="anchor"></a>Group terms into concepts</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">searchterms</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">groupedterms &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>()</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(searchterms)){</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(searchterms[i])</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">  decision &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/menu">menu</a></span>(<span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"woodpecker"</span>, <span class="st">"fire"</span>, <span class="st">"abundance"</span>, <span class="st">"none"</span>, <span class="st">"multiple"</span>), <span class="dt">title =</span> <span class="st">"Which concept group does this term belong to?"</span>)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">1</span>){</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  groupedterms[i] &lt;-<span class="st"> "woodpecker"</span>}</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">  <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">2</span>){</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">  groupedterms[i] &lt;-<span class="st"> "fire"</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">}<span class="cf">else</span> <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">3</span>){</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">  groupedterms[i] &lt;-<span class="st"> "abundance"</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">}<span class="cf">else</span> <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">4</span>){</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">  groupedterms[i] &lt;-<span class="st"> "x"</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">}<span class="cf">else</span> <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">5</span>){</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">  groupedterms[i] &lt;-<span class="st"> "multiple"</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">}</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">}</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co"># term_groups &lt;- cbind(searchterms, groupedterms)</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">term_groups &lt;-<span class="st"> </span>litsearchr<span class="op">::</span>term_groups</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">woodpeckers &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"woodpecker"</span>, <span class="st">"red-cockaded woodpecker"</span>, <span class="st">"leuconotopicus borealis"</span>, <span class="st">"picoides borealis"</span>),</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">  term_groups[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(term_groups[,<span class="dv">2</span>]<span class="op">==</span><span class="st">"woodpecker"</span>), <span class="dv">1</span>]))</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">fire &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"fire"</span>, <span class="st">"prescribed fire"</span>, <span class="st">"prescribed burn"</span>, <span class="st">"fire treatment"</span>),</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">  term_groups[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(term_groups[,<span class="dv">2</span>]<span class="op">==</span><span class="st">"fire"</span>), <span class="dv">1</span>]))</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">abundance &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"species abundance"</span>, <span class="st">"species presence"</span>, <span class="st">"species density"</span>, <span class="st">"population density"</span>, <span class="st">"population size"</span>),</a>
-<a class="sourceLine" id="cb7-33" data-line-number="33">  term_groups[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(term_groups[,<span class="dv">2</span>]<span class="op">==</span><span class="st">"abundance"</span>), <span class="dv">1</span>]))</a>
-<a class="sourceLine" id="cb7-34" data-line-number="34"></a>
-<a class="sourceLine" id="cb7-35" data-line-number="35">mysearchterms &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(woodpeckers, fire, abundance)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">searchterms
+groupedterms &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>()
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(searchterms)){
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(searchterms[i])
+  decision &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/menu">menu</a></span>(<span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"woodpecker"</span>, <span class="st">"fire"</span>, <span class="st">"abundance"</span>, <span class="st">"none"</span>, <span class="st">"multiple"</span>), <span class="dt">title =</span> <span class="st">"Which concept group does this term belong to?"</span>)
+    <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">1</span>){
+  groupedterms[i] &lt;-<span class="st"> "woodpecker"</span>}
+  <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">2</span>){
+  groupedterms[i] &lt;-<span class="st"> "fire"</span>
+}<span class="cf">else</span> <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">3</span>){
+  groupedterms[i] &lt;-<span class="st"> "abundance"</span>
+}<span class="cf">else</span> <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">4</span>){
+  groupedterms[i] &lt;-<span class="st"> "x"</span>
+}<span class="cf">else</span> <span class="cf">if</span>(decision<span class="op">==</span><span class="dv">5</span>){
+  groupedterms[i] &lt;-<span class="st"> "multiple"</span>
+}
+}
+
+<span class="co"># term_groups &lt;- cbind(searchterms, groupedterms)</span>
+
+term_groups &lt;-<span class="st"> </span>litsearchr<span class="op">::</span>term_groups
+
+woodpeckers &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"woodpecker"</span>, <span class="st">"red-cockaded woodpecker"</span>, <span class="st">"leuconotopicus borealis"</span>, <span class="st">"picoides borealis"</span>),
+  term_groups[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(term_groups[,<span class="dv">2</span>]<span class="op">==</span><span class="st">"woodpecker"</span>), <span class="dv">1</span>]))
+
+fire &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"fire"</span>, <span class="st">"prescribed fire"</span>, <span class="st">"prescribed burn"</span>, <span class="st">"fire treatment"</span>),
+  term_groups[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(term_groups[,<span class="dv">2</span>]<span class="op">==</span><span class="st">"fire"</span>), <span class="dv">1</span>]))
+
+abundance &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/append">append</a></span>(
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"species abundance"</span>, <span class="st">"species presence"</span>, <span class="st">"species density"</span>, <span class="st">"population density"</span>, <span class="st">"population size"</span>),
+  term_groups[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(term_groups[,<span class="dv">2</span>]<span class="op">==</span><span class="st">"abundance"</span>), <span class="dv">1</span>]))
+
+mysearchterms &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(woodpeckers, fire, abundance)</code></pre></div>
 </div>
 <div id="write-boolean-searches" class="section level2">
 <h2 class="hasAnchor">
 <a href="#write-boolean-searches" class="anchor"></a>Write Boolean searches</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">woodpecker_search &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/write_search">write_search</a></span>(<span class="dt">groupdata =</span> mysearchterms, </a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">                                          <span class="dt">languages =</span> <span class="st">"English"</span>, <span class="dt">stemming =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">                                          <span class="dt">exactphrase =</span> <span class="ot">TRUE</span>, <span class="dt">writesearch =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">                                          <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">woodpecker_search</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">woodpecker_search &lt;-<span class="st"> </span>litsearchr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/litsearchr/topics/write_search">write_search</a></span>(<span class="dt">groupdata =</span> mysearchterms, 
+                                          <span class="dt">languages =</span> <span class="st">"English"</span>, <span class="dt">stemming =</span> <span class="ot">TRUE</span>,
+                                          <span class="dt">exactphrase =</span> <span class="ot">TRUE</span>, <span class="dt">writesearch =</span> <span class="ot">FALSE</span>, 
+                                          <span class="dt">verbose =</span> <span class="ot">TRUE</span>)
+
+woodpecker_search</code></pre></div>
 </div>
 </div>
   </div>
@@ -209,7 +209,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Martin Westgate, Malcolm Barrett, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Malcolm Barrett, Michael Schermann.</p>
+  <p>Developed by Martin Westgate, Malcolm Barrett, Eliza Grames, Charles Gray, W. Kyle Hamilton, Emily Kothe, Luke McGuinness, Rose O'Dea, Alfredo Sanchez-Tojar, Michael Schermann.</p>
 </div>
 
 <div class="pkgdown">
