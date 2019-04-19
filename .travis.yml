@@ -7,17 +7,6 @@ apt_packages:
     - libgsl0ldbl
     - libxml2-dev
 
-r_binary_packages:
-    - Rcpp
-    - RcppGSL
-    - roxygen2
-    - tidyverse
-    - devtools
-    - stringi
-    - covr
-    - qpdf
-
-
 r_build_args: --no-build-vignettes --no-manual
 r_check_args: --no-build-vignettes --no-manual
 
@@ -25,5 +14,3 @@ warnings_are_errors : false
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
-  
-r_github_packages: r-lib/remotes#340
