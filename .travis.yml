@@ -2,10 +2,17 @@
 
 language: r
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libmagick++-dev
+
 apt_packages:
     - libgsl0-dev
     - libgsl0ldbl
     - libxml2-dev
+
+r_build_args: --no-build-vignettes --no-manual
+r_check_args: --no-build-vignettes --no-manual
 
 r_binary_packages:
     - Rcpp
@@ -16,10 +23,6 @@ r_binary_packages:
     - stringi
     - covr
     - qpdf
-
-
-r_build_args: --no-build-vignettes --no-manual
-r_check_args: --no-build-vignettes --no-manual
 
 warnings_are_errors : false
 

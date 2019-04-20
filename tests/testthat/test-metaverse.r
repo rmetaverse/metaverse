@@ -6,6 +6,6 @@ test_that("Starts the metaverse package", {
 })
 
 test_that("Number of attached packages", {
-  expect_length(metaverse_packages(include_self = TRUE), 12)
-  expect_length(metaverse_packages(include_self = FALSE), 11)
+  expect_length(metaverse_packages(include_self = TRUE), 13)
+  expect_length(metaverse_packages(include_self = FALSE), 12)
 })
