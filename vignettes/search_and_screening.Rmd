@@ -1,13 +1,14 @@
 ---
-title: "Systematic review for a meta-analysis of the effects of prescribed burning on abundance of red-cockaded woodpeckers (Picoides borealis)"
+title: Example systematic review
 author: "Eliza M. Grames, Rose O'Dea, Alfredo Sanchez-Tojar, and Michael Schermann"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{}
+  %\VignetteIndexEntry{Example systematic review}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
+This document gives an example of the early stages of a systematic review of the effects of prescribed burning on abundance of red-cockaded woodpeckers (Picoides borealis)
 
 # Write and conduct naive search
 
@@ -18,10 +19,27 @@ Searches were conducted on April 10, 2019 with no date restrictions. We searched
 ```{r eval = FALSE}
 search_directory <- "~/litsearchr/inst/extdata/borealis/"
 
-naiveimport <- litsearchr::import_results(directory = search_directory, remove_duplicates = FALSE, clean_dataset = TRUE, save_full_dataset = FALSE)
+naiveimport <- litsearchr::import_results(
+  directory = search_directory,
+  remove_duplicates = FALSE,
+  clean_dataset = TRUE,
+  save_full_dataset = FALSE
+)
 
-dedupe_stage1 <- litsearchr::deduplicate(naiveimport, use_abstracts = FALSE, use_titles = TRUE, method = "quick")
-dedupe_stage2 <- litsearchr::deduplicate(dedupe_stage1, use_abstracts = TRUE, use_titles = FALSE, doc_sim = .8, method = "tokens")
+dedupe_stage1 <- litsearchr::deduplicate(
+  naiveimport,
+  use_abstracts = FALSE,
+  use_titles = TRUE,
+  method = "quick"
+)
+
+dedupe_stage2 <- litsearchr::deduplicate(
+  dedupe_stage1,
+  use_abstracts = TRUE,
+  use_titles = FALSE,
+  doc_sim = .8,
+  method = "tokens"
+)
 
 naiveresults <- dedupe_stage2
 
@@ -34,55 +52,85 @@ naiveresults <- dedupe_stage2
 
 # Note: if you can't run rapidraker due to rJava issues, the output is stored in litsearchr::rakedkeywords
 
-taggedkeywords <- litsearchr::extract_terms(naiveresults, type="tagged", min_freq = 2, title = TRUE, abstract = TRUE, ngrams = TRUE, n=2)
+taggedkeywords <- litsearchr::extract_terms(
+  naiveresults,
+  type = "tagged",
+  min_freq = 2,
+  title = TRUE,
+  abstract = TRUE,
+  ngrams = TRUE,
+  n = 2
+)
 
 ```
 
 ## Build the keyword co-occurrence network
 
 ```{r eval = FALSE}
-naivedictionary <- litsearchr::make_dictionary(terms=list(rakedkeywords, taggedkeywords))
+naivedictionary <- litsearchr::make_dictionary(
+  terms = list(rakedkeywords, taggedkeywords))
 naivecorpus <- litsearchr::make_corpus(naiveresults)
 naivedfm <- litsearchr::create_dfm(naivecorpus, my_dic=naivedictionary)
-naivegraph <- litsearchr::create_network(naivedfm, min_studies=1, min_occurrences = 1)
+naivegraph <- litsearchr::create_network(
+  naivedfm,
+  min_studies = 1,
+  min_occurrences = 1
+)
 ```
 
-## Identify change points in keyword importance 
+## Identify change points in keyword importance
 
 ```{r eval = FALSE}
-plot(sort(igraph::strength(BBWO_graph)), ylab="Node strength", main="Ranked node strengths", xlab="Rank")
+plot(
+  sort(igraph::strength(BBWO_graph)),
+  ylab = "Node strength",
+  main = "Ranked node strengths",
+  xlab = "Rank"
+)
 ```
 
 ```{r eval = FALSE}
-splinecutoff <- litsearchr::find_cutoff(naivegraph, method = "spline", degrees = 2, knot_num = 3, 
-                                        diagnostics = TRUE, importance_method = "strength")
-# note: if you don't want to wait for the freepsgen algorithm, 
+splinecutoff <- litsearchr::find_cutoff(
+  naivegraph,
+  method = "spline",
+  degrees = 2,
+  knot_num = 3,
+  diagnostics = TRUE,
+  importance_method = "strength"
+)
+# note: if you don't want to wait for the freepsgen algorithm,
 ```
 
 
 ```{r eval = FALSE}
-reducedgraph <- litsearchr::reduce_graph(naivegraph, cutoff_strength = splinecutoff[1])
-searchterms <- litsearchr::get_keywords(reducedgraph, savekeywords = FALSE, makewordle = FALSE)
+reducedgraph <- litsearchr::reduce_graph(
+  naivegraph,
+  cutoff_strength = splinecutoff[1]
+)
+searchterms <- litsearchr::get_keywords(
+  reducedgraph,
+  savekeywords = FALSE,
+  makewordle = FALSE
+)
 ```
 
 ## Group terms into concepts
 ```{r eval = FALSE}
 searchterms
-groupedterms <- c()
+groupedterms <- rep("", length(searchterms))
 for(i in 1:length(searchterms)){
-print(searchterms[i])
-  decision <- menu(choices = c("woodpecker", "fire", "abundance", "none", "multiple"), title = "Which concept group does this term belong to?")
-    if(decision==1){
-  groupedterms[i] <- "woodpecker"}
-  if(decision==2){
-  groupedterms[i] <- "fire"
-}else if(decision==3){
-  groupedterms[i] <- "abundance"
-}else if(decision==4){
-  groupedterms[i] <- "x"
-}else if(decision==5){
-  groupedterms[i] <- "multiple"
-}
+  print(searchterms[i])
+  decision <- menu(
+    choices = c("woodpecker", "fire", "abundance", "none", "multiple"),
+    title = "Which concept group does this term belong to?"
+  )
+  switch(as.character(decision),
+    "1" = {groupedterms[i] <- "woodpecker"},
+    "2" = {groupedterms[i] <- "fire"},
+    "3" = {groupedterms[i] <- "abundance"},
+    "4" = {groupedterms[i] <- "x"},
+    "5" = {groupedterms[i] <- "multiple"}
+  )
 }
 
 # term_groups <- cbind(searchterms, groupedterms)
@@ -90,16 +138,21 @@ print(searchterms[i])
 term_groups <- litsearchr::term_groups
 
 woodpeckers <- unique(append(
-  c("woodpecker", "red-cockaded woodpecker", "leuconotopicus borealis", "picoides borealis"),
-  term_groups[which(term_groups[,2]=="woodpecker"), 1]))
+  c("woodpecker", "red-cockaded woodpecker",
+    "leuconotopicus borealis", "picoides borealis"
+  ),
+  term_groups[which(term_groups[,2] == "woodpecker"), 1]
+))
 
 fire <- unique(append(
   c("fire", "prescribed fire", "prescribed burn", "fire treatment"),
-  term_groups[which(term_groups[,2]=="fire"), 1]))
+  term_groups[which(term_groups[,2] == "fire"), 1]))
 
 abundance <- unique(append(
-  c("species abundance", "species presence", "species density", "population density", "population size"),
-  term_groups[which(term_groups[,2]=="abundance"), 1]))
+  c("species abundance", "species presence", "species density",
+    "population density", "population size"
+  ),
+  term_groups[which(term_groups[,2] == "abundance"), 1]))
 
 mysearchterms <- list(woodpeckers, fire, abundance)
 
@@ -108,9 +161,9 @@ mysearchterms <- list(woodpeckers, fire, abundance)
 ## Write Boolean searches
 
 ```{r eval = FALSE}
-woodpecker_search <- litsearchr::write_search(groupdata = mysearchterms, 
+woodpecker_search <- litsearchr::write_search(groupdata = mysearchterms,
                                           languages = "English", stemming = TRUE,
-                                          exactphrase = TRUE, writesearch = FALSE, 
+                                          exactphrase = TRUE, writesearch = FALSE,
                                           verbose = TRUE)
 
 woodpecker_search

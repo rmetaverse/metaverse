@@ -1,12 +1,12 @@
 ---
-title: "Meta-Analysis Workflow"
+title: Example meta-analysis
 author: "Charles T. Gray, Malcolm Barrett, W. Kyle Hamilton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Example meta-analysis}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include = FALSE}
@@ -31,7 +31,7 @@ Model objects can be challenging to work with in their raw form in R. The [`broo
 
 ## demonstration
 
-We begin by creating a random-effects model object via `metafor::`, which is included in the `metaverse::`. 
+We begin by creating a random-effects model object via `metafor::`, which is included in the `metaverse::`.
 
 ```{r data}
 # grab a dataset from metafor
@@ -80,7 +80,7 @@ We can use functions from `tidymeta::` to conduct subgroup meta-analyses
 ma_model_wkh <- metafor::dat.bcg
 
 
-ma <- ma_model_wkh %>% 
+ma <- ma_model_wkh %>%
   escalc(
     measure = "RR",
     ai = tpos,
@@ -88,8 +88,8 @@ ma <- ma_model_wkh %>%
     ci = cpos,
     di = cneg,
     data = .) %>%
-  dplyr::group_by(alloc) %>% 
-  meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE) 
+  dplyr::group_by(alloc) %>%
+  meta_analysis(yi = yi, vi = vi, slab = author, exponentiate = TRUE)
 
 ma
 
@@ -99,7 +99,7 @@ ma
 `tidymeta::` also has some handy ggplot based graphics for meta-analysis. Graph elements can be added using `ggplot2` geoms.
 
 ```{r warning=FALSE}
-fp <- ma %>% 
+fp <- ma %>%
   forest_plot(group = alloc) +
   ggplot2::geom_vline(xintercept = 0, linetype = "dashed") +
   ggplot2::xlab("Effect sizes") +
@@ -116,13 +116,13 @@ weightrMeta(ma)
 ```
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-# 
-# 
+#
+#
 #    MM                   
 #   <' \___/|            
 #     \_  _/  
 #       ][  
-#    Chicken 
+#    Chicken
 #                          
 ```
 

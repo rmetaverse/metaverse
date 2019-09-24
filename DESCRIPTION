@@ -88,7 +88,7 @@ Suggests:
     knitr,
     rmarkdown,
     weightr
-License: GPL-3
+License: file LICENSE
 BugReports: https://github.com/rmetaverse/metaverse
 LazyData: true
 RoxygenNote: 6.1.1.9000
