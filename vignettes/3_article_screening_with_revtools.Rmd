@@ -1,0 +1,12 @@
+---
+title: Article screening with revtools
+author: "Martin Westgate"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Article screening with revtools}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+# examples go here

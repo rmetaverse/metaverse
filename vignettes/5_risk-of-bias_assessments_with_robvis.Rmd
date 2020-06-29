@@ -1,5 +1,5 @@
 ---
-title: "Introduction to `robvis`, a visualization tool for risk-of-bias assessments"
+title: "Risk-of-bias assessments using robvis"
 author: "Luke A McGuinness"
 date: "`r Sys.Date()`"
 output:
@@ -7,8 +7,8 @@ output:
     toc: yes
     toc_depth: 4
 vignette: |
-  %\VignetteIndexEntry{Introduction to robvis} 
-  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteIndexEntry{Risk-of-bias assessments using robvis}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 ```{r setup, include=FALSE}
@@ -25,11 +25,11 @@ library(robvis)
 
 # Introduction
 
-The `robvis` package provides functions to convert a risk-of-bias assessment summary table into a summary plot or a traffic-light plot, formatted based on the specific risk-of-bias assessment tool used. 
+The `robvis` package provides functions to convert a risk-of-bias assessment summary table into a summary plot or a traffic-light plot, formatted based on the specific risk-of-bias assessment tool used.
 
 `robvis` currently contains templates for the following tools:
 
-* ROB2 
+* ROB2
 * ROBINS-I
 * QUADAS-2
 * ROB1
@@ -48,10 +48,10 @@ rob_tools()
 
 `robvis` expects certain facts about the data you provide it.
 
-1. The first column contains the study identifier 
-1. The second-to-last column will contain the overall risk-of-bias judgments
-1. The last column will contain the weights, which can all be set to 1 if the relevant weights are not available.
-1. The first row of the data does not contain column headings. This can be achieved using the `header = TRUE` option (which indicates that the first line contains column headings) when reading in your summary table:
+1. The first column contains the study identifier
+2. The second-to-last column will contain the overall risk-of-bias judgments
+3. The last column will contain the weights, which can all be set to 1 if the relevant weights are not available.
+4. The first row of the data does not contain column headings. This can be achieved using the `header = TRUE` option (which indicates that the first line contains column headings) when reading in your summary table:
 
 ```{r, eval=FALSE}
 data <- read.csv("path/to/summary_table.csv", header = TRUE)
@@ -63,8 +63,8 @@ All other columns are expected to contain the results of the risk-of bias assess
   * Column 2-6: One RoB2 domain per column
   * Column 7: Overall risk-of-bias judgments
   * Column 8: Weights
-  
-  
+
+
 The only exception to this is the `"ROB1"` template, which is discussed [below.](#rob1)
 
 

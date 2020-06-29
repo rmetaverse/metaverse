@@ -1,10 +1,10 @@
 ---
-title: Example meta-analysis
+title: Meta-analysis with metafor
 author: "Charles T. Gray, Malcolm Barrett, W. Kyle Hamilton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example meta-analysis}
+  %\VignetteIndexEntry{Meta-analysis with metafor}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -113,16 +113,5 @@ Estimates the Vevea and Hedges (1995) weight-function model using the `pubBias::
 
 ```{r warning=FALSE}
 weightrMeta(ma)
-```
-
-```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-#
-#
-#    MM                   
-#   <' \___/|            
-#     \_  _/  
-#       ][  
-#    Chicken
-#                          
 ```
 

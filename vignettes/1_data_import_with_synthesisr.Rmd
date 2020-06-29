@@ -1,0 +1,62 @@
+---
+title: Data import and deduplication with synthesisr
+author: "Eliza M. Grames, Martin Westgate, Rose O'Dea, Alfredo Sanchez-Tojar, and Michael Schermann"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data import and deduplication with synthesisr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This document gives an example of the early stages of a systematic review of the effects of prescribed burning on abundance of red-cockaded woodpeckers (Picoides borealis)
+
+## Write and conduct a basic search
+You can use any search engine or database that you like. For convenience, here we used two common academic resources: Scopus and Web of Science. We ran our searches on April 10, 2019 with no date restrictions. We searched Scopus (1970-2019) and five databases in Web of Science: the Web of Science Core Collection (1900-2019), BIOSIS Previews (1926-2019), Current Contents Connect (1998-2019), MEDLINE (1950-2019), and Zoological Record (1945-2019). Our search string was:
+
+```{r eval = FALSE}
+TS=(("picoides borealis" OR "red-cockaded woodpecker*" OR "red cockaded woodpecker" OR "leuconotopicus borealis" OR woodpecker) AND ("prescribed burn*" OR "prescribed fire*" OR fire* OR wildfire* OR burn*) AND (abundan* OR presen* OR occup* OR occur* OR (popul* NEAR/2 (densit* OR size))))
+```
+
+
+## Import your data
+The default way to import bibliographic information using <code>synthesisr</code> is to use <code>read_refs</code>. This function can simultaneously import multiple files in different formats, then merge them together.
+
+```{r eval = FALSE}
+file_names <- c(
+  system.file("extdata", "scopus.ris", package = "synthesisr"),
+  system.file("extdata", "zoorec.txt", package = "synthesisr"))
+data <- synthesisr::read_refs(file_names)
+```
+
+The function <code>read_refs</code> returns a <code>data.frame</code> by default meaning that there are a number of ways to investigate the data you've just imported
+
+```{r eval = FALSE}
+dim(data) # number of rows and columns
+colnames(data) # names of columns
+str(data) # description of the content of a data.frame
+```
+
+
+## Deduplication
+Because our data are from different sources, it is likely that they contain duplicates; i.e. the same entry reported in different databases. The safest way to ensure these duplicates are correctly identified and removed is to sort through them manually using <code>revtools</code>:
+
+```{r eval = FALSE}
+cleaned_data <- revtools::screen_duplicates(data)
+```
+
+This approach can be very slow, however, especially for large datasets. Therefore, an alternative is to use automated methods to remove duplicates for you. The easiest way to do this is to use the <code>deduplicate</code> function:
+
+```{r eval = FALSE}
+cleaned_data <- synthesisr::deduplicate(data, match_by = "doi", method = "exact")
+```
+
+You can add options to customize how this works if you wish, for example to use fuzzy rather than exact matching, or to remove upper case characters and punctuation:
+
+```{r eval = FALSE}
+cleaned_data <- synthesisr::deduplicate(data,
+  match_by = "title",
+  method = "string_osa",
+  rm_punctuation = TRUE,
+  to_lower = TRUE)
+```

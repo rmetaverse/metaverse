@@ -1,49 +1,15 @@
 ---
-title: Example systematic review
+title: Search optimization with litsearchr
 author: "Eliza M. Grames, Rose O'Dea, Alfredo Sanchez-Tojar, and Michael Schermann"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example systematic review}
+  %\VignetteIndexEntry{Search optimization with litsearchr}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-This document gives an example of the early stages of a systematic review of the effects of prescribed burning on abundance of red-cockaded woodpeckers (Picoides borealis)
-
-# Write and conduct naive search
-
-Naive search: TS=(("picoides borealis" OR "red-cockaded woodpecker*" OR "red cockaded woodpecker" OR "leuconotopicus borealis" OR woodpecker) AND ("prescribed burn*" OR "prescribed fire*" OR fire* OR wildfire* OR burn*) AND (abundan* OR presen* OR occup* OR occur* OR (popul* NEAR/2 (densit* OR size))))
-
-Searches were conducted on April 10, 2019 with no date restrictions. We searched Scopus (1970-2019) and five databases in Web of Science: the Web of Science Core Collection (1900-2019), BIOSIS Previews (1926-2019), Current Contents Connect (1998-2019), MEDLINE (1950-2019), and Zoological Record (1945-2019).
-
-```{r eval = FALSE}
-search_directory <- "~/litsearchr/inst/extdata/borealis/"
-
-naiveimport <- litsearchr::import_results(
-  directory = search_directory,
-  remove_duplicates = FALSE,
-  clean_dataset = TRUE,
-  save_full_dataset = FALSE
-)
-
-dedupe_stage1 <- litsearchr::deduplicate(
-  naiveimport,
-  use_abstracts = FALSE,
-  use_titles = TRUE,
-  method = "quick"
-)
-
-dedupe_stage2 <- litsearchr::deduplicate(
-  dedupe_stage1,
-  use_abstracts = TRUE,
-  use_titles = FALSE,
-  doc_sim = .8,
-  method = "tokens"
-)
-
-naiveresults <- dedupe_stage2
-
-```
+## Ensure data from vignette 1 are available
+Data go here
 
 ## Identify potential keywords
 
