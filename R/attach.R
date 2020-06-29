@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream
 core <- c("robvis", "metafor", "tidymeta", "litsearchr", "revtools", "metadat", "broom", "pubBias", "metaDigitise")
 
+=======
+core <- function(){c("synthesisr", "revtools", "metaDigitise", "robvis", "metafor")}
+>>>>>>> Stashed changes
 
 core_loaded <- function() {
   search <- paste0("package:", core)
@@ -52,4 +56,3 @@ package_version <- function(x) {
   }
   paste0(version, collapse = ".")
 }
-
