@@ -63,36 +63,13 @@ Authors@R: c(
     email = "mschermann@scu.edu",
     comment = c(ORCID = "0000-0003-1210-0554")))
 Description: Early-stage package for importing a subset of Evidence Synthesis (ES) packages, and providing example workflows for systematic reviews and meta-analyses.
-<<<<<<< Updated upstream
-Imports:
-    robvis (>= 0.0.0.9000),
-    metafor,
-    litsearchr (>= 0.1.0),
-    revtools,
-    metadat (>= 0.1.0),
-    broom (>= 0.5.2.9001),
-    metaDigitise,
-    tidymeta (>= 0.1.0.9000),
-    pubBias,
-    crayon,
-    cli,
-    rstudioapi
-Remotes:
-    mcguinlu/robvis,
-    elizagrames/litsearchr,
-    tidymodels/broom,
-    malcolmbarrett/tidymeta,
-    wviechtb/metadat,
-    kylehamilton/pubBias
-Suggests:
-    testthat,
-    knitr,
-    rmarkdown,
-    weightr
+Imports: cli, crayon, rstudioapi,
+  synthesisr, litsearchr, revtools, metaDigitise, robvis, metafor
+Suggests: testthat, knitr, rmarkdown, weightr
 License: file LICENSE
 BugReports: https://github.com/rmetaverse/metaverse/issues
 LazyData: true
-RoxygenNote: 6.1.1.9000
+RoxygenNote: 7.1.0
 DevPackage:
     elizagrames/litsearchr,
     mjwestgate/revtools,
