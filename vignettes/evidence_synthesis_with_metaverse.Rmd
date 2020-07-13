@@ -1,0 +1,360 @@
+---
+title: Evidence synthesis workflows with metaverse
+author: "Eliza M. Grames, Martin Westgate, Rose O'Dea, Alfredo Sanchez-Tojar, Michael Schermann, Luke A McGuinness, Charles T. Gray, Malcolm Barrett, W. Kyle Hamilton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data import and deduplication with synthesisr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+# metaverse
+The R package ecosystem contains a huge number of resources for systematic reviews and meta-analyses. The metaverse package imports a set of these packages, selected to cover as many stages of the systematic review workflow as possible. Future versions of {synthesisr} will aim to fill gaps in this workflow using new packages.
+
+
+## Data import & deduplication via `{synthesisr}`
+The default way to import bibliographic information using `synthesisr` is to use `read_refs`. This function can simultaneously import multiple files in different formats, then merge them together.
+
+```{r eval = FALSE}
+file_names <- c(
+  system.file("extdata", "scopus.ris", package = "synthesisr"),
+  system.file("extdata", "zoorec.txt", package = "synthesisr"))
+data <- synthesisr::read_refs(file_names)
+```
+
+These data are from a search on the effects of prescribed burning on abundance of red-cockaded woodpeckers (Picoides borealis) using two common academic resources: Scopus and Web of Science. We ran our searches on April 10, 2019 with no date restrictions. We searched Scopus (1970-2019) and five databases in Web of Science: the Web of Science Core Collection (1900-2019), BIOSIS Previews (1926-2019), Current Contents Connect (1998-2019), MEDLINE (1950-2019), and Zoological Record (1945-2019). Our search string was:
+
+```{r eval = FALSE}
+TS=(("picoides borealis" OR "red-cockaded woodpecker*" OR "red cockaded woodpecker" OR "leuconotopicus borealis" OR woodpecker) AND ("prescribed burn*" OR "prescribed fire*" OR fire* OR wildfire* OR burn*) AND (abundan* OR presen* OR occup* OR occur* OR (popul* NEAR/2 (densit* OR size))))
+```
+
+The function `read_refs` returns a `data.frame` by default meaning that there are a number of ways to investigate the data you've just imported
+
+```{r eval = FALSE}
+dim(data) # number of rows and columns
+colnames(data) # names of columns
+str(data) # description of the content of a data.frame
+```
+
+Because our data are from different sources, it is likely that they contain duplicates; i.e. the same entry reported in different databases. The easiest way to remove these duplicates is to use the `deduplicate` function:
+
+```{r eval = FALSE}
+cleaned_data <- synthesisr::deduplicate(data, match_by = "doi", method = "exact")
+```
+
+You can add options to customize how this works if you wish, for example to use fuzzy rather than exact matching, or to remove upper case characters and punctuation:
+
+```{r eval = FALSE}
+cleaned_data <- synthesisr::deduplicate(data,
+  match_by = "title",
+  method = "string_osa",
+  rm_punctuation = TRUE,
+  to_lower = TRUE)
+```
+
+If you'd prefer to remove duplicates manually, you can do that using `revtools`:
+
+```{r eval = FALSE}
+cleaned_data <- revtools::screen_duplicates(data)
+```
+
+##  Search optimisation using `{litsearchr}`
+A common question during systematic reviews is whether the search used to locate references was adequate. In particular, it can be useful to know whether other possible keywords should have been included. One way to test this is using `litsearchr`:
+
+```{r eval = FALSE}
+# automatically identify key terms
+rake_keywords <- litsearchr::extract_terms(cleaned_data$title,
+  method = "fakerake",
+  min_freq = 5)
+
+# or use author-defined keywords
+keywords <- unique(do.call(c, strsplit(cleaned_data$keywords, " and ")))
+
+tagged_keywords <- litsearchr::extract_terms(
+  cleaned_data$title,
+  keywords = keywords,
+  method = "tagged",
+  min_freq = 5,
+  min_n = 1,
+  max_n = 2)
+
+```
+We can then use this information to build a keyword co-occurrence network:
+
+```{r eval = FALSE}
+naive_dfm <- litsearchr::create_dfm(
+  elements = cleaned_data$abstract,
+  features = rake_keywords)
+
+naive_graph <- litsearchr::create_network(naive_dfm) #,
+  min_studies = 1,
+  min_occ = 1) # fails for unknown reasons
+```
+
+This information helps us to identify change points in keyword importance
+
+```{r eval = FALSE}
+plot(
+  sort(igraph::strength(BBWO_graph)),
+  ylab = "Node strength",
+  main = "Ranked node strengths",
+  xlab = "Rank"
+)
+```
+
+```{r eval = FALSE}
+splinecutoff <- litsearchr::find_cutoff(
+  naivegraph,
+  method = "spline",
+  degrees = 2,
+  knot_num = 3,
+  diagnostics = TRUE,
+  importance_method = "strength"
+)
+```
+
+
+```{r eval = FALSE}
+reducedgraph <- litsearchr::reduce_graph(
+  naivegraph,
+  cutoff_strength = splinecutoff[1]
+)
+searchterms <- litsearchr::get_keywords(
+  reducedgraph,
+  savekeywords = FALSE,
+  makewordle = FALSE
+)
+```
+
+Group terms into concepts
+```{r eval = FALSE}
+searchterms
+groupedterms <- rep("", length(searchterms))
+for(i in 1:length(searchterms)){
+  print(searchterms[i])
+  decision <- menu(
+    choices = c("woodpecker", "fire", "abundance", "none", "multiple"),
+    title = "Which concept group does this term belong to?"
+  )
+  switch(as.character(decision),
+    "1" = {groupedterms[i] <- "woodpecker"},
+    "2" = {groupedterms[i] <- "fire"},
+    "3" = {groupedterms[i] <- "abundance"},
+    "4" = {groupedterms[i] <- "x"},
+    "5" = {groupedterms[i] <- "multiple"}
+  )
+}
+
+# term_groups <- cbind(searchterms, groupedterms)
+
+term_groups <- litsearchr::term_groups
+
+woodpeckers <- unique(append(
+  c("woodpecker", "red-cockaded woodpecker",
+    "leuconotopicus borealis", "picoides borealis"
+  ),
+  term_groups[which(term_groups[,2] == "woodpecker"), 1]
+))
+
+fire <- unique(append(
+  c("fire", "prescribed fire", "prescribed burn", "fire treatment"),
+  term_groups[which(term_groups[,2] == "fire"), 1]))
+
+abundance <- unique(append(
+  c("species abundance", "species presence", "species density",
+    "population density", "population size"
+  ),
+  term_groups[which(term_groups[,2] == "abundance"), 1]))
+
+mysearchterms <- list(woodpeckers, fire, abundance)
+
+```
+
+Finally, we can use this information to to write Boolean searches
+
+```{r eval = FALSE}
+woodpecker_search <- litsearchr::write_search(groupdata = mysearchterms,
+                                          languages = "English", stemming = TRUE,
+                                          exactphrase = TRUE, writesearch = FALSE,
+                                          verbose = TRUE)
+
+woodpecker_search
+
+```
+
+## Article screening using {revtools}
+
+
+## Data extraction using {metaDigitise}
+
+
+## Risk-of-bias assessment using {robvis}
+
+The `robvis` package provides functions to convert a risk-of-bias assessment summary table into a summary plot or a traffic-light plot, formatted based on the specific risk-of-bias assessment tool used.
+
+`robvis` currently contains templates for the following tools:
+
+* ROB2
+* ROBINS-I
+* QUADAS-2
+* ROB1
+
+Users can find the exact assessment tool name expected by the `tool` argument of the `rob_summary()` and `rob_traffic_light()` functions by running:
+
+```{r, eval = FALSE}
+rob_tools()
+#> [1] "ROB2"
+#> [1] "ROBINS-I"
+#> [1] "QUADAS-2"
+#> [1] "ROB1"
+```
+
+## Loading your data
+
+`robvis` expects certain facts about the data you provide it.
+
+1. The first column contains the study identifier
+2. The second-to-last column will contain the overall risk-of-bias judgments
+3. The last column will contain the weights, which can all be set to 1 if the relevant weights are not available.
+4. The first row of the data does not contain column headings. This can be achieved using the `header = TRUE` option (which indicates that the first line contains column headings) when reading in your summary table:
+
+```{r, eval=FALSE}
+data <- read.csv("path/to/summary_table.csv", header = TRUE)
+```
+
+All other columns are expected to contain the results of the risk-of bias assessments for a specific domain. To elaborate, consider as an example the ROB2.0 tool which has 5 domains. The resulting data set that `robvis` would expect for this tool would have 8 columns:
+
+  * Column 1: Study identifier
+  * Column 2-6: One RoB2 domain per column
+  * Column 7: Overall risk-of-bias judgments
+  * Column 8: Weights
+
+The only exception to this is the `"ROB1"` template, which is discussed below.
+
+
+## Example data sets {#example-data-sets}
+
+To help users explore `robvis`, we have included an example data set for each tool template that exists in the package. For example, the `data_rob2` data set, which contains example risk-of-bias assessments performed using the RoB2.0 tool for randomized controlled trials, is presented below:
+
+```{r headrob, echo = FALSE}
+knitr::kable(data_rob2)
+```
+
+<br>
+<hr>
+<br>
+
+# Summary plots (`rob_summary()`)
+
+This function returns a `ggplot` object displaying a weighted bar-chart of the distribution of risk-of-bias judgments across the domains of the specified tool.
+
+
+```{r}
+# RoB2.0 tool for randomized controlled trials
+rob_summary(data_rob2, tool = "ROB2")
+
+# ROBINS-I tool for non-randomized studies of interventions
+rob_summary(data_robins, tool = "ROBINS-I")
+
+# QUADAS-2 tool for diagnostic test accuracy studies
+rob_summary(data_quadas, tool = "QUADAS-2")
+```
+
+
+By default, a bar representing the overall risk-of-bias judgments is not included in the plot. If you would like to include this, set `overall = TRUE`. For example:
+
+```{r}
+rob_summary(data_rob2, tool = "ROB2", overall = TRUE)
+```
+
+By default, the barplot is weighted by some measure of study precision (see [Example data sets](#example-data-sets)). You can turn off this option by setting `weighted = FALSE`. For example, compare this plot with that produced by the based `rob_summary()` function using the `data_rob2` data set.
+
+```{r}
+rob_summary(data_rob2, tool = "ROB2", weighted = FALSE)
+```
+
+The `colour` argument of both plotting functions allows users to select from two predefined colour schemes, "cochrane" (default) or "colourblind", or to define their own palette by providing a vector of hex codes.
+
+For example, to use the predefined "colourblind" palette:
+
+```{r}
+rob_summary(data = data_rob2, tool = "ROB2", colour = "colourblind")
+```
+
+And to define your own colour scheme:
+```{r}
+rob_summary(data = data_rob2, tool = "ROB2", colour = c("#f442c8","#bef441","#000000"))
+```
+
+When defining your own colour scheme, you must ensure that the number of discrete judgments (e.g. "Low"/"Moderate"/"High"/"Critical") and the number of colours specified are the same. Additionally, colours must be specified in order of ascending risk-of-bias (e.g. "Low" -> "Critical"), with the first hex corresponding to "Low" risk of bias.
+
+
+# Traffic light plots (`rob_traffic_light()`)
+
+This function returns a `ggplot` object displaying the risk-of-bias judgement in each domain for each study, as well as the overall risk-of-bias judgement for that study.
+
+
+### RoB2.0 tool for randomized controlled trials
+```{r, fig.width = 6, fig.height = 9, fig.align="center"}
+rob_traffic_light(data_rob2, tool = "ROB2")
+```
+
+### ROBINS-I tool for non-randomized studies of interventions
+```{r, fig.width = 7.5, fig.height = 10.5, fig.align="center"}
+rob_traffic_light(data_robins, tool = "ROBINS-I")
+```
+
+### QUADAS-2 tool for diagnostic test accuracy studies
+```{r, fig.width = 7.5, fig.height = 10.5, fig.align="center"}
+rob_traffic_light(data_quadas, tool = "QUADAS-2")
+```
+
+
+# The "ROB1" template {#rob1}
+
+## Motivation
+This template offers increased flexibility in the domains that are included in the plot. It can handle any number of user defined domains and uses the user defined column headings as domains titles in the resulting figures.
+
+
+## Varying numbers of domains
+The `"ROB1"` option can handle varying numbers of columns, as authors using the ROB1 assessment tool frequently add or remove bias domains within this tool. __However, we would discourage authors from doing so with any tool other than ROB1.__ Authors using other published tools (ROB2, QUADAS-2, ROBINS-I) should use the stricter templates presented above to ensure they conform with the guidance.
+
+## Domain names
+For the other tools listed above, the names of the columns containing the domain-level risk of bias judgments are not important. However, this is not the case when using the `"ROB1"` template.
+
+Compare for example, the first row of the `data_rob2` and the `data_rob1`, and the resulting figures.
+
+```{r}
+colnames(data_rob2)
+
+colnames(data_rob1)
+```
+
+The domain columns (Columns 2-6) in the ROB2 example have been given arbitrary names of D1-D5, as they will be overwritten by the function to correspond to the correct domain titles as per the ROB2 guidance.
+
+In contrast, the domain columns (Columns 2-8) in the ROB1 example use their true title as the column heading, as these will be used in the figures produced by `rob_summary()` and `rob_traffic_light()`. As an example, suppose we change the name of the "Random.sequence.generation" column to something else. In the `rob_summary()` figure, the title of the first bar is changed, while in the `rob_traffic_light()` figure, the caption is updated to reflect this change.
+
+```{r, echo = FALSE}
+colnames(data_rob1)[2] <- "This is a test"
+rob_summary(data_rob1, tool = "ROB1")
+```
+
+```{r, fig.width = 7, fig.height = 9, fig.align="center", echo = FALSE}
+rob_traffic_light(data_rob1, tool = "ROB1")
+```
+
+
+## Meta-analysis using {metafor}
+```{r eval = FALSE}
+data_bcg <- metafor::dat.bcg
+model_inputs <- escalc(
+    measure = "RR",
+    ai = tpos,
+    bi = tneg,
+    ci = cpos,
+    di = cneg,
+    data = data_bcg
+  )
+model <- rma(yi, vi, data = model_inputs, method = "EB")
+```

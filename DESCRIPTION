@@ -70,11 +70,5 @@ License: file LICENSE
 BugReports: https://github.com/rmetaverse/metaverse/issues
 LazyData: true
 RoxygenNote: 7.1.0
-DevPackage:
-    elizagrames/litsearchr,
-    mjwestgate/revtools,
-    wviechtb/metadat,
-    tidymodels/broom,
-    kylehamilton/pubBias
 URL: https://github.com/rmetaverse/metaverse
 VignetteBuilder: knitr
