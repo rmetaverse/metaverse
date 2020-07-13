@@ -59,7 +59,7 @@ If you'd prefer to remove duplicates manually, you can do that using `revtools`:
 cleaned_data <- revtools::screen_duplicates(data)
 ```
 
-##  Search optimisation using `{litsearchr}`
+##  Search optimisation using `litsearchr`
 A common question during systematic reviews is whether the search used to locate references was adequate. In particular, it can be useful to know whether other possible keywords should have been included. One way to test this is using `litsearchr`:
 
 ```{r eval = FALSE}
@@ -183,13 +183,13 @@ woodpecker_search
 
 ```
 
-## Article screening using {revtools}
+## Article screening using `revtools`
 
 
-## Data extraction using {metaDigitise}
+## Data extraction using `metaDigitise`
 
 
-## Risk-of-bias assessment using {robvis}
+## Risk-of-bias assessment using `robvis`
 
 The `robvis` package provides functions to convert a risk-of-bias assessment summary table into a summary plot or a traffic-light plot, formatted based on the specific risk-of-bias assessment tool used.
 
@@ -345,7 +345,7 @@ rob_traffic_light(data_rob1, tool = "ROB1")
 ```
 
 
-## Meta-analysis using {metafor}
+## Meta-analysis using `metafor`
 ```{r eval = FALSE}
 data_bcg <- metafor::dat.bcg
 model_inputs <- escalc(
