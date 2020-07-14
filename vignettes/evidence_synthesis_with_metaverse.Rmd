@@ -1,19 +1,26 @@
 ---
 title: Evidence synthesis workflows with metaverse
-author: "Eliza M. Grames, Martin Westgate, Rose O'Dea, Alfredo Sanchez-Tojar, Michael Schermann, Luke A McGuinness, Charles T. Gray, Malcolm Barrett, W. Kyle Hamilton"
+author: "Martin J. Westgate, Eliza M. Grames, Rose O'Dea, Alfredo Sanchez-Tojar, Michael Schermann, Luke A. McGuinness, Charles T. Gray, Malcolm Barrett & W. Kyle Hamilton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Data import and deduplication with synthesisr}
+  %\VignetteIndexEntry{Evidence synthesis workflows with metaverse}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
+The R package ecosystem contains a huge number of resources for systematic reviews and meta-analyses. The `metaverse` package imports a set of these packages, selected to cover as many stages of the systematic review workflow as possible. Future versions of `metaverse` will aim to fill gaps in this workflow via new packages.
 
-# metaverse
-The R package ecosystem contains a huge number of resources for systematic reviews and meta-analyses. The metaverse package imports a set of these packages, selected to cover as many stages of the systematic review workflow as possible. Future versions of {synthesisr} will aim to fill gaps in this workflow using new packages.
+## Contents
+1. [Data import & deduplication](#import)
+2. [Search optimisation](#search-optimisation)
+3. [Article screening](#screening)
+4. [Extracting data from figures](#data-extraction)
+5. [Risk-of-bias assessment](#risk-of-bias)
+6. [Meta-analysis](#meta-analysis)
+7. [Citing `metaverse`](#citations)
 
 
-## Data import & deduplication via `{synthesisr}`
+## Data import & deduplication using `synthesisr` <a name="import"></a>
 The default way to import bibliographic information using `synthesisr` is to use `read_refs`. This function can simultaneously import multiple files in different formats, then merge them together.
 
 ```{r eval = FALSE}
@@ -29,7 +36,7 @@ These data are from a search on the effects of prescribed burning on abundance o
 TS=(("picoides borealis" OR "red-cockaded woodpecker*" OR "red cockaded woodpecker" OR "leuconotopicus borealis" OR woodpecker) AND ("prescribed burn*" OR "prescribed fire*" OR fire* OR wildfire* OR burn*) AND (abundan* OR presen* OR occup* OR occur* OR (popul* NEAR/2 (densit* OR size))))
 ```
 
-The function `read_refs` returns a `data.frame` by default meaning that there are a number of ways to investigate the data you've just imported
+The function `read_refs` returns a `data.frame` by default meaning that there are a number of ways to investigate the data you've just imported:
 
 ```{r eval = FALSE}
 dim(data) # number of rows and columns
@@ -59,20 +66,20 @@ If you'd prefer to remove duplicates manually, you can do that using `revtools`:
 cleaned_data <- revtools::screen_duplicates(data)
 ```
 
-##  Search optimisation using `litsearchr`
+
+##  Search optimisation using `litsearchr` <a name="search-optimisation"></a>
 A common question during systematic reviews is whether the search used to locate references was adequate. In particular, it can be useful to know whether other possible keywords should have been included. One way to test this is using `litsearchr`:
 
 ```{r eval = FALSE}
 # automatically identify key terms
-rake_keywords <- litsearchr::extract_terms(cleaned_data$title,
+rake_keywords <- litsearchr::extract_terms(cleaned_data$abstract,
   method = "fakerake",
   min_freq = 5)
 
 # or use author-defined keywords
 keywords <- unique(do.call(c, strsplit(cleaned_data$keywords, " and ")))
 
-tagged_keywords <- litsearchr::extract_terms(
-  cleaned_data$title,
+tagged_keywords <- litsearchr::extract_terms(cleaned_data$title,
   keywords = keywords,
   method = "tagged",
   min_freq = 5,
@@ -87,274 +94,120 @@ naive_dfm <- litsearchr::create_dfm(
   elements = cleaned_data$abstract,
   features = rake_keywords)
 
-naive_graph <- litsearchr::create_network(naive_dfm) #,
+naive_graph <- litsearchr::create_network(
+  search_dfm = as.matrix(naive_dfm),
   min_studies = 1,
-  min_occ = 1) # fails for unknown reasons
+  min_occ = 1)
 ```
 
-This information helps us to identify change points in keyword importance
+And identify change points in keyword importance:
 
 ```{r eval = FALSE}
-plot(
-  sort(igraph::strength(BBWO_graph)),
-  ylab = "Node strength",
-  main = "Ranked node strengths",
-  xlab = "Rank"
-)
+# identify a cutoff point
+spline_cutoff <- litsearchr::find_cutoff(naive_graph,
+  method = "cumulative",
+  percent = 0.3,
+  knot_num = 3)
+
+reduced_graph <- litsearchr::reduce_graph(naive_graph,
+  cutoff_strength = spline_cutoff)
+
+search_terms <- litsearchr::get_keywords(reduced_graph)
 ```
 
-```{r eval = FALSE}
-splinecutoff <- litsearchr::find_cutoff(
-  naivegraph,
-  method = "spline",
-  degrees = 2,
-  knot_num = 3,
-  diagnostics = TRUE,
-  importance_method = "strength"
-)
-```
-
+Finally, we can group terms together and write a Boolean search:
 
 ```{r eval = FALSE}
-reducedgraph <- litsearchr::reduce_graph(
-  naivegraph,
-  cutoff_strength = splinecutoff[1]
-)
-searchterms <- litsearchr::get_keywords(
-  reducedgraph,
-  savekeywords = FALSE,
-  makewordle = FALSE
-)
-```
+search_groups <- split(search_terms,
+  factor(
+    2 - as.numeric(grepl("forest|log", search_terms)),
+    levels = seq_len(2),
+    labels = c("forest", "not forest")))
 
-Group terms into concepts
-```{r eval = FALSE}
-searchterms
-groupedterms <- rep("", length(searchterms))
-for(i in 1:length(searchterms)){
-  print(searchterms[i])
-  decision <- menu(
-    choices = c("woodpecker", "fire", "abundance", "none", "multiple"),
-    title = "Which concept group does this term belong to?"
-  )
-  switch(as.character(decision),
-    "1" = {groupedterms[i] <- "woodpecker"},
-    "2" = {groupedterms[i] <- "fire"},
-    "3" = {groupedterms[i] <- "abundance"},
-    "4" = {groupedterms[i] <- "x"},
-    "5" = {groupedterms[i] <- "multiple"}
-  )
-}
-
-# term_groups <- cbind(searchterms, groupedterms)
-
-term_groups <- litsearchr::term_groups
-
-woodpeckers <- unique(append(
-  c("woodpecker", "red-cockaded woodpecker",
-    "leuconotopicus borealis", "picoides borealis"
-  ),
-  term_groups[which(term_groups[,2] == "woodpecker"), 1]
-))
-
-fire <- unique(append(
-  c("fire", "prescribed fire", "prescribed burn", "fire treatment"),
-  term_groups[which(term_groups[,2] == "fire"), 1]))
-
-abundance <- unique(append(
-  c("species abundance", "species presence", "species density",
-    "population density", "population size"
-  ),
-  term_groups[which(term_groups[,2] == "abundance"), 1]))
-
-mysearchterms <- list(woodpeckers, fire, abundance)
-
-```
-
-Finally, we can use this information to to write Boolean searches
-
-```{r eval = FALSE}
-woodpecker_search <- litsearchr::write_search(groupdata = mysearchterms,
-                                          languages = "English", stemming = TRUE,
-                                          exactphrase = TRUE, writesearch = FALSE,
-                                          verbose = TRUE)
+woodpecker_search <- litsearchr::write_search(search_groups,
+  languages = "English",
+  stemming = TRUE,
+  closure = "left",
+  exactphrase = TRUE,
+  writesearch = FALSE,
+  verbose = TRUE)
 
 woodpecker_search
-
-```
-
-## Article screening using `revtools`
-
-
-## Data extraction using `metaDigitise`
-
-
-## Risk-of-bias assessment using `robvis`
-
-The `robvis` package provides functions to convert a risk-of-bias assessment summary table into a summary plot or a traffic-light plot, formatted based on the specific risk-of-bias assessment tool used.
-
-`robvis` currently contains templates for the following tools:
-
-* ROB2
-* ROBINS-I
-* QUADAS-2
-* ROB1
-
-Users can find the exact assessment tool name expected by the `tool` argument of the `rob_summary()` and `rob_traffic_light()` functions by running:
-
-```{r, eval = FALSE}
-rob_tools()
-#> [1] "ROB2"
-#> [1] "ROBINS-I"
-#> [1] "QUADAS-2"
-#> [1] "ROB1"
-```
-
-## Loading your data
-
-`robvis` expects certain facts about the data you provide it.
-
-1. The first column contains the study identifier
-2. The second-to-last column will contain the overall risk-of-bias judgments
-3. The last column will contain the weights, which can all be set to 1 if the relevant weights are not available.
-4. The first row of the data does not contain column headings. This can be achieved using the `header = TRUE` option (which indicates that the first line contains column headings) when reading in your summary table:
-
-```{r, eval=FALSE}
-data <- read.csv("path/to/summary_table.csv", header = TRUE)
-```
-
-All other columns are expected to contain the results of the risk-of bias assessments for a specific domain. To elaborate, consider as an example the ROB2.0 tool which has 5 domains. The resulting data set that `robvis` would expect for this tool would have 8 columns:
-
-  * Column 1: Study identifier
-  * Column 2-6: One RoB2 domain per column
-  * Column 7: Overall risk-of-bias judgments
-  * Column 8: Weights
-
-The only exception to this is the `"ROB1"` template, which is discussed below.
-
-
-## Example data sets {#example-data-sets}
-
-To help users explore `robvis`, we have included an example data set for each tool template that exists in the package. For example, the `data_rob2` data set, which contains example risk-of-bias assessments performed using the RoB2.0 tool for randomized controlled trials, is presented below:
-
-```{r headrob, echo = FALSE}
-knitr::kable(data_rob2)
-```
-
-<br>
-<hr>
-<br>
-
-# Summary plots (`rob_summary()`)
-
-This function returns a `ggplot` object displaying a weighted bar-chart of the distribution of risk-of-bias judgments across the domains of the specified tool.
-
-
-```{r}
-# RoB2.0 tool for randomized controlled trials
-rob_summary(data_rob2, tool = "ROB2")
-
-# ROBINS-I tool for non-randomized studies of interventions
-rob_summary(data_robins, tool = "ROBINS-I")
-
-# QUADAS-2 tool for diagnostic test accuracy studies
-rob_summary(data_quadas, tool = "QUADAS-2")
 ```
 
 
-By default, a bar representing the overall risk-of-bias judgments is not included in the plot. If you would like to include this, set `overall = TRUE`. For example:
+## Article screening using `revtools` <a name="screening"></a>
+Once you have a set of articles returned by a search, the next step is to determine which of these are most relevant to your questions. This process is called 'screening', and can be accomplished using `revtools`.
 
-```{r}
-rob_summary(data_rob2, tool = "ROB2", overall = TRUE)
-```
+If you wish to manually check every entry, you can check either titles or abstracts with the associated `screen_` function:
 
-By default, the barplot is weighted by some measure of study precision (see [Example data sets](#example-data-sets)). You can turn off this option by setting `weighted = FALSE`. For example, compare this plot with that produced by the based `rob_summary()` function using the `data_rob2` data set.
-
-```{r}
-rob_summary(data_rob2, tool = "ROB2", weighted = FALSE)
-```
-
-The `colour` argument of both plotting functions allows users to select from two predefined colour schemes, "cochrane" (default) or "colourblind", or to define their own palette by providing a vector of hex codes.
-
-For example, to use the predefined "colourblind" palette:
-
-```{r}
-rob_summary(data = data_rob2, tool = "ROB2", colour = "colourblind")
-```
-
-And to define your own colour scheme:
-```{r}
-rob_summary(data = data_rob2, tool = "ROB2", colour = c("#f442c8","#bef441","#000000"))
-```
-
-When defining your own colour scheme, you must ensure that the number of discrete judgments (e.g. "Low"/"Moderate"/"High"/"Critical") and the number of colours specified are the same. Additionally, colours must be specified in order of ascending risk-of-bias (e.g. "Low" -> "Critical"), with the first hex corresponding to "Low" risk of bias.
-
-
-# Traffic light plots (`rob_traffic_light()`)
-
-This function returns a `ggplot` object displaying the risk-of-bias judgement in each domain for each study, as well as the overall risk-of-bias judgement for that study.
-
-
-### RoB2.0 tool for randomized controlled trials
-```{r, fig.width = 6, fig.height = 9, fig.align="center"}
-rob_traffic_light(data_rob2, tool = "ROB2")
-```
-
-### ROBINS-I tool for non-randomized studies of interventions
-```{r, fig.width = 7.5, fig.height = 10.5, fig.align="center"}
-rob_traffic_light(data_robins, tool = "ROBINS-I")
-```
-
-### QUADAS-2 tool for diagnostic test accuracy studies
-```{r, fig.width = 7.5, fig.height = 10.5, fig.align="center"}
-rob_traffic_light(data_quadas, tool = "QUADAS-2")
-```
-
-
-# The "ROB1" template {#rob1}
-
-## Motivation
-This template offers increased flexibility in the domains that are included in the plot. It can handle any number of user defined domains and uses the user defined column headings as domains titles in the resulting figures.
-
-
-## Varying numbers of domains
-The `"ROB1"` option can handle varying numbers of columns, as authors using the ROB1 assessment tool frequently add or remove bias domains within this tool. __However, we would discourage authors from doing so with any tool other than ROB1.__ Authors using other published tools (ROB2, QUADAS-2, ROBINS-I) should use the stricter templates presented above to ensure they conform with the guidance.
-
-## Domain names
-For the other tools listed above, the names of the columns containing the domain-level risk of bias judgments are not important. However, this is not the case when using the `"ROB1"` template.
-
-Compare for example, the first row of the `data_rob2` and the `data_rob1`, and the resulting figures.
-
-```{r}
-colnames(data_rob2)
-
-colnames(data_rob1)
-```
-
-The domain columns (Columns 2-6) in the ROB2 example have been given arbitrary names of D1-D5, as they will be overwritten by the function to correspond to the correct domain titles as per the ROB2 guidance.
-
-In contrast, the domain columns (Columns 2-8) in the ROB1 example use their true title as the column heading, as these will be used in the figures produced by `rob_summary()` and `rob_traffic_light()`. As an example, suppose we change the name of the "Random.sequence.generation" column to something else. In the `rob_summary()` figure, the title of the first bar is changed, while in the `rob_traffic_light()` figure, the caption is updated to reflect this change.
-
-```{r, echo = FALSE}
-colnames(data_rob1)[2] <- "This is a test"
-rob_summary(data_rob1, tool = "ROB1")
-```
-
-```{r, fig.width = 7, fig.height = 9, fig.align="center", echo = FALSE}
-rob_traffic_light(data_rob1, tool = "ROB1")
-```
-
-
-## Meta-analysis using `metafor`
 ```{r eval = FALSE}
-data_bcg <- metafor::dat.bcg
-model_inputs <- escalc(
-    measure = "RR",
+screen_titles(cleaned_data) # or
+screen_abstracts(cleaned_data)
+```
+
+Alternatively, if you wish to see a visualisation of the patterns in your text data, you can do so using topic models to help you screen your data:
+
+```{r eval = FALSE}
+screen_topics(cleaned_data)
+```
+
+
+## Data extraction using `metaDigitise` <a name="data-extraction"></a>
+Screening titles and abstracts is useful, but it still leaves the process of extracting data from full-text articles before meta-analysis can take place. While much of this process is quite labor-intensive, the process of extracting data from figures can be made easier by using `metaDigitise`.
+
+You can see the full vignette <a href="https://cran.r-project.org/web/packages/metaDigitise/vignettes/metaDigitise.html">here</a>; but briefly, the process is to copy your images into a single directory and pass that information to the `metaDigitise` function:
+
+```{r eval = FALSE}
+data <- metaDigitise::metaDigitise(dir = "~/extracted_figures/")
+```
+
+This function will then walk you through how to process the images and display the results.
+
+
+## Risk-of-bias assessment using `robvis` <a name="risk-of-bias"></a>
+A common task in some evidence synthesis projects is evaluation of the internal validity of projects included in the review, and what the potential is for bias as a result of these assessments. The `robvis` package provides functions to convert a risk-of-bias assessment summary table into a summary plot or a traffic-light plot, formatted based on the specific risk-of-bias assessment tool used. A <a href="https://cran.r-project.org/web/packages/robvis/vignettes/Introduction_to_robvis.html">comprehensive vignette</a> is available on CRAN; but the basic usage is to first import or create some data in the correct format, and then use `robvis` to either plot a summary:
+
+```{r, fig.width = 6, fig.height = 4, fig.align="center", echo = FALSE}
+robvis::rob_summary(robvis::data_rob2, tool = "ROB2")
+```
+or a more detailed traffic light plot:
+```{r, fig.width = 6, fig.height = 6, fig.align="center", echo = FALSE}
+robvis::rob_traffic_light(robvis::data_rob2, tool = "ROB2", psize = 10)
+```
+
+
+## Meta-analysis using `metafor` <a name="meta-analysis"></a>
+Meta-analysis is a large topic, and it would be impossible for a single vignette to cover all of the available options. However, `metafor` is one of the oldest and most widely-used R packages available for this topic. It also has a well-developed <a href="http://www.metafor-project.org/doku.php">website</a> that provides examples and tips.
+
+The basic approach demonstrated below is to calculate a standardised effect size, then create a model using these new data:
+
+```{r eval = FALSE}
+model_inputs <- metafor::escalc(measure = "RR",
     ai = tpos,
     bi = tneg,
     ci = cpos,
     di = cneg,
-    data = data_bcg
-  )
-model <- rma(yi, vi, data = model_inputs, method = "EB")
+    data = metafor::dat.bcg)
+
+model <- metafor::rma(yi, vi, data = model_inputs, method = "EB")
+
+summary(model)
 ```
+
+
+## Citing `metaverse`<a name="citations"></a>
+We've worked pretty hard on getting `metaverse` working, and we hope that you like it and find it useful. However, the vast majority of the work took place by individuals and teams of developers on the packages that metaverse imports. Therefore, if you use `metaverse` in your work, please cite the specific packages that you have used. The appropriate citations are:
+
+- Westgate MJ & Grames EM (2020) synthesisr: Import, Assemble, and Deduplicate Bibliographic Datasets. R package version 0.3.0. [https://CRAN.R-project.org/package=synthesisr](https://CRAN.R-project.org/package=synthesisr)
+
+- Grames EM, Stillman AN, Tingley MW & Elphick CS (2019) An automated approach to identifying search terms for systematic reviews using keyword co-occurrence networks. _Methods in Ecology and Evolution_ <b>10</b>(10): 1645-1654. DOI: [10.1111/2041-210X.13268](https://doi.org/10.1111/2041-210X.13268).
+
+- Westgate MJ (2019) revtools: An R package to support article screening for evidence
+synthesis. _Research Synthesis Methods_ <b>10</b>(4): 606-614. doi: [10.1002/jrsm.1374](https://doi.org/10.1002/jrsm.1374)
+
+- Pick JL, Nakagawa S & Noble DWA (2018) Reproducible, flexible and high-throughput data extraction from primary literature: The metaDigitise R package. _Methods in Ecology and Evolution_ <b>10</b>(3): 426-431. DOI: [10.1111/2041-210X.13118](https://doi.org/10.1111/2041-210X.13118)
+
+- Viechtbauer W (2010) Conducting meta-analyses in R with the metafor package. _Journal of Statistical Software_ <b>36</b>(3): 1-48. DOI: [10.18637/jss.v036.i03](https://doi.org/10.18637/jss.v036.i03)
+
+- McGuinness LA, Higgins JPT (2020) Risk-of-bias VISualization (robvis): An R package and Shiny web app for visualizing risk-of-bias assessments. _Research Synthesis Methods_. DOI: [10.1002/jrsm.1411](https://doi.org/10.1002/jrsm.1411)

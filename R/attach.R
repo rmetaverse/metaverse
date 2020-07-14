@@ -1,12 +1,12 @@
-core <- function(){c("synthesisr", "revtools", "metaDigitise", "robvis", "metafor")}
+metaverse_pkgs <- c("synthesisr", "revtools", "metaDigitise", "robvis", "metafor")
 
 core_loaded <- function() {
-  search <- paste0("package:", core())
-  core[search %in% search()]
+  search <- paste0("package:", metaverse_pkgs)
+  metaverse_pkgs[search %in% search()]
 }
 core_unloaded <- function() {
-  search <- paste0("package:", core())
-  core()[!search %in% search()]
+  search <- paste0("package:", metaverse_pkgs)
+  metaverse_pkgs[!search %in% search()]
 }
 
 metaverse_attach <- function() {

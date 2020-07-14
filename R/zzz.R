@@ -1,5 +1,5 @@
 .onAttach <- function(...) {
-  needed <- core()[!is_attached(core())]
+  needed <- metaverse_pkgs[!is_attached(metaverse_pkgs)]
   if (length(needed) == 0)
     return()
 
